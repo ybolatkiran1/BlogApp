@@ -151,10 +151,14 @@
 - Projede ASP.NET Identity yerine özel kullanıcı yönetimi sistemi kullanılmıştır.
 - Uygulama SQLite destekli olup, kolay taşınabilir yapıdadır.
 - Responsive tasarım sayesinde mobil cihazlarda da uyumlu çalışır.
+- Moq kütüphanesi ile MockDatalar kullanarak test senaryoları gerçekleştirilmiş olup başarıyla geçmiştir.
+- Test senaryoları için BlogApp.Test projesini çalıştırılması gerekir.
 - Görseller `wwwroot/img/users/` ve `wwwroot/img/post/` dizinlerinde saklanır.
 - Projeye yeni modüller (beğeni sistemi, etiket yönetimi, admin paneli) kolayca eklenebilir yapıdadır.
+- Projeyi ilk başta çalıştırmak için gerekli NuGet Paketleri yüklenmelidir.
+- Bu proje Doğuş Teknoloji'nin Bootcamp eğitiminin final ödevi için geliştirilmiştir.
 
 ---
 
-**Teşekkürler** 
+**- Bootcamp eğitimini gerçekleştiren eğitmenimiz Ahmet Kaya'ya teşekkürlerimi sunarım.** 
 Her türlü katkıya ve geri bildirime açığız. 🎉
