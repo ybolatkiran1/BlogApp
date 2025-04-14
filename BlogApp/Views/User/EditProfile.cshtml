@@ -110,11 +110,12 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         function deleteProfile() {
             if (confirm('Hesabınızı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz ve tüm yazılarınız ve yorumlarınız silinecektir.')) {
-                // Form oluştur ve gönder
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '@Url.Action("DeleteProfile", "User")';
@@ -122,8 +123,6 @@
                 form.submit();
             }
         }
-
-        
-        });
     </script>
+}
 }
