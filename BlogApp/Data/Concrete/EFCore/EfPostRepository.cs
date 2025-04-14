@@ -38,8 +38,7 @@ namespace BlogApp.Data.Concrete.EFCore
                 entity.Url = post.Url;
                 entity.IsActive = post.IsActive;
                 entity.Image = post.Image;
-
-                entity.Tags = post.Tags; // Tag güncellemeyi de kapsasın
+                entity.Tags = post.Tags; 
 
                 _context.SaveChanges();
             }
@@ -50,7 +49,6 @@ namespace BlogApp.Data.Concrete.EFCore
             return _context.Posts.FirstOrDefault(p => p.PostId == postId);
         }
 
-        // Yeni metodlar
         public async Task<Tag?> GetTagByTextAsync(string text)
         {
             return await _context.Tags.FirstOrDefaultAsync(t => t.Text == text);

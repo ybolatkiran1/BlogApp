@@ -3,25 +3,18 @@
 
 <div class="container py-5">
     <article class="blog-post">
-        <!-- Başlık Alanı -->
         <div class="post-header text-center mb-4">
             <h1 class="post-title">@Model.Title</h1>
             <div class="post-meta">
                 <span><i class="far fa-calendar"></i> @Model.PublishedOn.ToString("dd.MM.yyyy HH:mm")</span>
             </div>
         </div>
-
-        <!-- Resim Alanı (Merkeze Hizalı) -->
         <div class="text-center mb-5">
             <img src="~/img/post/@Model.Image" class="post-featured-image img-fluid" alt="@Model.Title">
         </div>
-
-        <!-- İçerik Alanı -->
         <div class="post-content">
             @Html.Raw(Model.Content)
         </div>
-
-        <!-- Etiketler -->
         <div class="post-tags mt-5 text-center">
             @foreach (var tag in Model.Tags)
             {
@@ -29,8 +22,6 @@
             }
         </div>
     </article>
-
-    <!-- Yazar Bilgileri -->
     <div class="author-info mb-5" style="max-width: 800px; margin: 0 auto;">
         <h3 class="mb-3" style="font-weight: 600; padding-bottom: 15px; border-bottom: 1px solid var(--dark-tertiary);">Yazar</h3>
         <div class="d-flex align-items-center gap-3 p-4 rounded" style="background-color: var(--dark-tertiary);">
@@ -48,12 +39,9 @@
             </div>
         </div>
     </div>
-
-    <!-- Yorumlar Bölümü -->
     <div class="comments-section mt-5">
         <h3 class="mb-4">Yorumlar <span id="commentCount">@Model.Comments.Count</span></h3>
 
-        <!-- Yorum Formu -->
         @if (User.Identity!.IsAuthenticated)
         {
             <form id="commentForm" class="comment-form mb-4">
@@ -72,7 +60,6 @@
             </div>
         }
 
-        <!-- Yorumlar Listesi -->
         <div id="comments">
             @foreach (var comment in Model.Comments.OrderByDescending(c => c.PublishedOn).Take(5))
             {
@@ -89,7 +76,6 @@
             }
         </div>
 
-        <!-- Sayfalama -->
         <div id="pagination" class="mt-4 text-center">
             <nav aria-label="Yorum sayfaları">
                 <ul class="pagination justify-content-center">
@@ -113,12 +99,10 @@
         var totalPages = @Math.Ceiling(Model.Comments.Count / 5.0);
 
         $(document).ready(function () {
-            // Karakter sayacı
             $('#Text').on('input', function() {
                 var currentLength = $(this).val().length;
                 $('#charCount').text(currentLength);
                 
-                // Karakter limiti aşıldığında uyarı göster
                 if (currentLength > 300) {
                     $('#charCount').addClass('text-danger');
                 } else {
@@ -126,10 +110,8 @@
                 }
             });
 
-            // Sayfalama kontrollerini güncelle
             updatePagination();
 
-            // Sayfa değişikliği
             $(document).on('click', '.page-link', function(e) {
                 e.preventDefault();
                 var page = $(this).data('page');
@@ -137,8 +119,6 @@
                     loadComments(page);
                 }
             });
-
-            // Yorum ekleme
             $("#btnYorumKayit").click(function () {
                 var text = $("#Text").val().trim();
                 if (!text) {
@@ -182,8 +162,6 @@
                             $('#charCount').text('0');
                             var adet = parseInt($("#commentCount").text());
                             $("#commentCount").text(adet + 1);
-                            
-                            // Yeni yorum eklendiğinde sayfa sayısını güncelle
                             totalPages = Math.ceil((adet + 1) / 5);
                             updatePagination();
                         } else {
@@ -239,8 +217,6 @@
 
         function updatePagination() {
             var paginationHtml = '';
-            
-            // Önceki sayfa butonu (sadece ilk sayfada değilken göster)
             if (currentPage > 1) {
                 paginationHtml += `
                     <li class="page-item">
@@ -249,7 +225,6 @@
                 `;
             }
 
-            // Sayfa numaraları
             for (var i = 1; i <= totalPages; i++) {
                 paginationHtml += `
                     <li class="page-item ${currentPage === i ? 'active' : ''}">
@@ -257,8 +232,6 @@
                     </li>
                 `;
             }
-
-            // Sonraki sayfa butonu (sadece son sayfada değilken göster)
             if (currentPage < totalPages) {
                 paginationHtml += `
                     <li class="page-item">
@@ -275,7 +248,6 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/style.css" />
     <style>
-        /* Blog post özel stilleri */
         .blog-post {
             max-width: 800px;
             margin: 0 auto 60px;
@@ -303,15 +275,12 @@
             max-width: 800px;
             margin: 0 auto;
         }
-
-        /* Mevcut dark temanın yorumlar ve diğer öğeleri doğru şekilde görüntülemesi için */
         .comments-section h3 {
             font-weight: 600;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--dark-tertiary);
         }
 
-        /* Yorum stilleri */
         .comment {
             display: flex;
             gap: 15px;
@@ -330,7 +299,7 @@
 
         .comment-body {
             flex: 1;
-            min-width: 0; /* Flexbox içinde taşmayı önler */
+            min-width: 0; 
         }
 
         .comment-header {
@@ -359,7 +328,6 @@
             line-height: 1.5;
         }
 
-        /* Yorum form stilleri */
         .comment-form textarea {
             background-color: var(--dark-tertiary);
             border: 1px solid var(--dark-secondary);
@@ -374,7 +342,6 @@
             color: var(--text-primary);
         }
 
-        /* Sayfalama stilleri */
         .pagination {
             margin-top: 20px;
         }
@@ -402,7 +369,6 @@
             color: var(--text-secondary);
         }
 
-        /* Karakter sayacı stilleri */
         .text-muted {
             font-size: 0.875rem;
         }

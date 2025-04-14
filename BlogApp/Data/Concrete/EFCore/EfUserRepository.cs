@@ -17,7 +17,7 @@ public class EfUserRepository : IUserRepository
     {
         try
         {
-            var users = await _context.Users.ToListAsync(); // Tüm kullanıcıları çekelim
+            var users = await _context.Users.ToListAsync();
             Console.WriteLine($"Toplam kullanıcı sayısı: {users.Count}");
 
             foreach (var u in users)

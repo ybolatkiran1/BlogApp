@@ -175,7 +175,6 @@ namespace BlogApp.Controllers
                     post.Image = randomFileName;
                 }
 
-                // Tag'leri güncelle
                 post.Tags.Clear();
 
                 foreach (var tagName in tagNames)
@@ -229,7 +228,6 @@ namespace BlogApp.Controllers
                 return Unauthorized();
             }
 
-            // Delete associated comments if they exist
             if (post.Comments != null && post.Comments.Any())
             {
                 foreach (var comment in post.Comments.ToList())
@@ -241,7 +239,6 @@ namespace BlogApp.Controllers
                 }
             }
 
-            // Delete the post
             _postRepository.DeletePost(post);
             await _postRepository.SaveAsync();
 
@@ -291,7 +288,6 @@ namespace BlogApp.Controllers
                     var randomFileName = $"{Guid.NewGuid()}{extension}";
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/post", randomFileName);
                     
-                    // Create directory if it doesn't exist
                     var directory = Path.GetDirectoryName(path);
                     if (!Directory.Exists(directory))
                     {

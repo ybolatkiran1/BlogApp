@@ -27,7 +27,7 @@ namespace BlogApp.Controllers
                 return Json(new { success = false, message = "Yorum yapabilmek için giriş yapmalısınız." });
             }
 
-            // Yorum uzunluğu kontrolü
+           
             if (Text.Length > 300)
             {
                 return Json(new { success = false, message = "Yorumunuz 300 karakterden uzun olamaz." });
@@ -116,7 +116,6 @@ namespace BlogApp.Controllers
                     return Json(new { success = false, message = "Yorum bulunamadı." });
                 }
 
-                // Sadece yorum sahibi veya post sahibi yorumu silebilir
                 var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 if (comment.UserId != userId && comment.Post.UserId != userId)
                 {

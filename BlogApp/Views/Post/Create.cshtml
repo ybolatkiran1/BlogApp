@@ -65,7 +65,6 @@
     
     <script>
         $(document).ready(function() {
-            // Açıklama alanı karakter sınırı kontrolü
             $('#Description').on('input', function() {
                 const warningDiv = $('#descriptionLimitWarning');
                 if ($(this).val().length === 150) {
@@ -80,7 +79,6 @@
 
 @section Styles {
     <style>
-        /* CKEditor özel stil */
         .ck-editor__editable {
             min-height: 300px;
             color: var(--text-primary) !important;

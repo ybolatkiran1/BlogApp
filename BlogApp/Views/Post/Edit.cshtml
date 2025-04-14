@@ -72,7 +72,6 @@
     </div>
 </div>
 
-<!-- Yorumlar Bölümü -->
 <div class="container py-4">
     <div class="row">
         <div class="col-md-8 mx-auto">
@@ -155,15 +154,12 @@
             let commentToDelete = null;
             let postIdToDelete = null;
 
-            // Yorum silme modal'ını göster
             $('.delete-comment').click(function(e) {
                 e.preventDefault();
                 commentToDelete = $(this).data('comment-id');
                 postIdToDelete = $(this).data('post-id');
                 $('#deleteCommentModal').modal('show');
             });
-
-            // Yorum silme onayı
             $('#confirmDeleteComment').click(function() {
                 if (!commentToDelete) return;
 
@@ -178,7 +174,6 @@
                         if (response.success) {
                             $('#comment-' + commentToDelete).fadeOut(300, function() {
                                 $(this).remove();
-                                // Eğer son yorum silindiyse "henüz yorum yapılmamış" mesajını göster
                                 if ($('.comments-list .comment').length === 0) {
                                     $('.comments-list').html(`
                                         <div class="text-center py-4">
@@ -199,7 +194,6 @@
                 });
             });
 
-            // Açıklama alanı karakter sınırı kontrolü
             $('#Description').on('input', function() {
                 const warningDiv = $('#descriptionLimitWarning');
                 if ($(this).val().length === 150) {
@@ -215,7 +209,6 @@
 
 @section Styles {
     <style>
-        /* CKEditor özel stil */
         .ck-editor__editable {
             min-height: 300px;
             color: var(--text-primary) !important;
@@ -245,7 +238,6 @@
             background-color: var(--dark-tertiary) !important;
         }
 
-        /* Yorum stilleri */
         .comment {
             max-width: 100%;
             position: relative;
@@ -266,7 +258,6 @@
             padding-right: 10px;
         }
 
-        /* Kaydırma çubuğu stilleri */
         .comment-content p::-webkit-scrollbar {
             width: 4px;
         }

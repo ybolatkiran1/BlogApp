@@ -37,7 +37,6 @@ namespace BlogApp.Tests.Controllers
                 _userRepository.Object
             );
 
-            // Setup default HttpContext with authenticated user
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, "1"),
@@ -123,13 +122,11 @@ namespace BlogApp.Tests.Controllers
             var queryable = data.AsQueryable();
             var mockDbSet = new Mock<DbSet<T>>();
 
-            // Setup IQueryable
             mockDbSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(new TestAsyncQueryProvider<T>(queryable.Provider));
             mockDbSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryable.Expression);
             mockDbSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
             mockDbSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(() => queryable.GetEnumerator());
 
-            // Setup IAsyncEnumerable
             mockDbSet.As<IAsyncEnumerable<T>>()
                 .Setup(m => m.GetAsyncEnumerator(It.IsAny<System.Threading.CancellationToken>()))
                 .Returns(new TestAsyncEnumerator<T>(queryable.GetEnumerator()));
@@ -140,17 +137,14 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task AddComment_WhenUserIsAuthenticated_ShouldCreateComment()
         {
-            // Arrange
             var user = new User { UserId = 1, UserName = "testuser" };
             var mockUserDbSet = CreateMockDbSet(new List<User> { user });
             _userRepository.Setup(x => x.Users).Returns(mockUserDbSet.Object);
             _commentRepository.Setup(x => x.CreateComment(It.IsAny<Comment>())).Verifiable();
             _commentRepository.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask).Verifiable();
 
-            // Act
             var result = await _controller.AddComment(1, "Test comment");
 
-            // Assert
             _commentRepository.Verify(x => x.CreateComment(It.IsAny<Comment>()), Times.Once);
             _commentRepository.Verify(x => x.SaveAsync(), Times.Once);
             var jsonResult = Assert.IsType<JsonResult>(result);
@@ -161,7 +155,6 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task AddComment_WhenUserIsNotAuthenticated_ShouldReturnError()
         {
-            // Arrange
             var identity = new ClaimsIdentity();
             var claimsPrincipal = new ClaimsPrincipal(identity);
             _controller.ControllerContext = new ControllerContext
@@ -169,10 +162,8 @@ namespace BlogApp.Tests.Controllers
                 HttpContext = new DefaultHttpContext { User = claimsPrincipal }
             };
 
-            // Act
             var result = await _controller.AddComment(1, "Test comment");
 
-            // Assert
             var jsonResult = Assert.IsType<JsonResult>(result);
             var response = JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(jsonResult.Value));
             Assert.False((bool)response.success);
@@ -182,17 +173,14 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task Delete_WhenUserIsAuthorized_ShouldDeleteComment()
         {
-            // Arrange
             var comment = new Comment { CommentId = 1, UserId = 1, Text = "Test comment" };
             var mockCommentDbSet = CreateMockDbSet(new List<Comment> { comment });
             _commentRepository.Setup(x => x.Comments).Returns(mockCommentDbSet.Object);
             _commentRepository.Setup(x => x.DeleteComment(It.IsAny<Comment>())).Verifiable();
             _commentRepository.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask).Verifiable();
 
-            // Act
             var result = await _controller.Delete(1, 1);
 
-            // Assert
             _commentRepository.Verify(x => x.DeleteComment(It.IsAny<Comment>()), Times.Once);
             _commentRepository.Verify(x => x.SaveAsync(), Times.Once);
             var jsonResult = Assert.IsType<JsonResult>(result);
@@ -203,15 +191,13 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task Delete_WhenUserIsNotAuthorized_ShouldReturnError()
         {
-            // Arrange
+           
             var comment = new Comment { CommentId = 1, UserId = 2, Text = "Test comment", Post = new Post { UserId = 3 } };
             var mockCommentDbSet = CreateMockDbSet(new List<Comment> { comment });
             _commentRepository.Setup(x => x.Comments).Returns(mockCommentDbSet.Object);
 
-            // Act
             var result = await _controller.Delete(1, 1);
 
-            // Assert
             var jsonResult = Assert.IsType<JsonResult>(result);
             var response = JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(jsonResult.Value));
             Assert.False((bool)response.success);

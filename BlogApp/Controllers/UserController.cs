@@ -78,15 +78,13 @@ namespace BlogApp.Controllers
                 
                 if (user != null)
                 {
-                    // Eski kullanıcılar için normal şifre kontrolü
                     bool isPasswordValid = false;
                     
-                    // Eğer şifre hashlenmişse (yeni kayıt)
-                    if (user.Password.Length == 44) // Base64 hash uzunluğu
+                    
+                    if (user.Password.Length == 44) 
                     {
                         isPasswordValid = PasswordHasher.VerifyPassword(model.Password, user.Password);
                     }
-                    // Eski kullanıcılar için normal şifre kontrolü
                     else
                     {
                         isPasswordValid = user.Password == model.Password;
@@ -208,7 +206,6 @@ namespace BlogApp.Controllers
 
             if (ModelState.IsValid)
             {
-                // Check if username is unique if changed
                 if (user.UserName != model.UserName)
                 {
                     var existingUser = await _userRepository.Users.FirstOrDefaultAsync(x => x.UserName == model.UserName);
@@ -219,7 +216,6 @@ namespace BlogApp.Controllers
                     }
                 }
 
-                // Check if email is unique if changed
                 if (user.Email != model.Email)
                 {
                     var existingUser = await _userRepository.Users.FirstOrDefaultAsync(x => x.Email == model.Email);
@@ -229,8 +225,6 @@ namespace BlogApp.Controllers
                         return View(model);
                     }
                 }
-
-                // Şifre değişikliği için mevcut şifre kontrolü
                 if (!string.IsNullOrEmpty(model.CurrentPassword) || !string.IsNullOrEmpty(model.NewPassword) || !string.IsNullOrEmpty(model.ConfirmPassword))
                 {
                     if (string.IsNullOrEmpty(model.CurrentPassword))
@@ -238,16 +232,13 @@ namespace BlogApp.Controllers
                         ModelState.AddModelError("CurrentPassword", "Mevcut şifrenizi girmelisiniz.");
                         return View(model);
                     }
-
-                    // Eski ve yeni şifre formatı kontrolü
                     bool isPasswordValid = false;
                     
-                    // Eğer şifre hashlenmişse (yeni kayıt)
-                    if (user.Password.Length == 44) // Base64 hash uzunluğu
+                    if (user.Password.Length == 44) 
                     {
                         isPasswordValid = PasswordHasher.VerifyPassword(model.CurrentPassword, user.Password);
                     }
-                    // Eski kullanıcılar için normal şifre kontrolü
+                    // wski kullanıcılar için normal şifre kontrolü
                     else
                     {
                         isPasswordValid = user.Password == model.CurrentPassword;
@@ -274,32 +265,21 @@ namespace BlogApp.Controllers
                     user.Password = PasswordHasher.HashPassword(model.NewPassword);
                 }
 
-                // Update user data
                 user.Name = model.Name;
                 user.Surname = model.Surname;
                 user.Email = model.Email;
                 user.UserName = model.UserName;
 
-                // Process image upload if provided
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // Get file extension
                     var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
-
-                    // Generate unique filename
                     var fileName = $"{Guid.NewGuid()}{extension}";
-
-                    // Save file path
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "users", fileName);
-
-                    // Create directory if not exists
                     var directory = Path.GetDirectoryName(filePath);
                     if (!Directory.Exists(directory))
                     {
                         Directory.CreateDirectory(directory!);
                     }
-
-                    // Save file
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(stream);
@@ -320,10 +300,7 @@ namespace BlogApp.Controllers
 
         private async Task UpdateUserCookie(User user)
         {
-            // Sign user out
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            // Create new claims
             var userClaims = new List<Claim>();
             userClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));
             userClaims.Add(new Claim(ClaimTypes.Name, user.UserName ?? ""));
@@ -337,8 +314,6 @@ namespace BlogApp.Controllers
 
             var claimsIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties { IsPersistent = true };
-
-            // Sign in with updated claims
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
@@ -349,14 +324,14 @@ namespace BlogApp.Controllers
         public async Task<IActionResult> Authors()
         {
             var users = await _userRepository.Users
-                .Include(u => u.Posts.Where(p => p.IsActive == true))  // Sadece aktif postları dahil et
+                .Include(u => u.Posts.Where(p => p.IsActive == true))  
                 .Select(u => new UserProfileViewModel
                 {
                     UserName = u.UserName,
                     Name = u.Name,
                     Image = u.Image,
-                    TotalPostCount = u.Posts.Count(p => p.IsActive == true),  // Aktif post sayısını say
-                    Posts = u.Posts.Where(p => p.IsActive == true)  // Aktif postları filtrele
+                    TotalPostCount = u.Posts.Count(p => p.IsActive == true),  
+                    Posts = u.Posts.Where(p => p.IsActive == true)  
                               .OrderByDescending(p => p.PublishedOn)
                               .Take(3)
                               .ToList()
@@ -385,23 +360,17 @@ namespace BlogApp.Controllers
                 return NotFound();
             }
 
-            // Kullanıcının tüm yazılarını sil
             foreach (var post in user.Posts.ToList())
             {
                 _postRepository.DeletePost(post);
             }
-
-            // Kullanıcının tüm yorumlarını sil
             foreach (var comment in user.Comments.ToList())
             {
                 _commentRepository.DeleteComment(comment);
             }
 
-            // Kullanıcıyı sil
             _userRepository.DeleteUser(user);
             await _userRepository.SaveAsync();
-
-            // Çıkış yap
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Post");

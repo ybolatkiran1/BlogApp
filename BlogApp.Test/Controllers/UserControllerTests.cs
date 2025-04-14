@@ -96,15 +96,14 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task Login_WithValidCredentials_ShouldRedirectToHome()
         {
-            // Arrange
+            
             var user = new User { Email = "test@example.com", Password = "testpass" };
             var mockDbSet = CreateMockDbSet(new List<User> { user });
             _userRepository.Setup(x => x.Users).Returns(mockDbSet.Object);
 
-            // Act
+            
             var result = await _controller.Login(new LoginViewModel { Email = "test@example.com", Password = "testpass" });
 
-            // Assert
             var redirectResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Index", redirectResult.ActionName);
             Assert.Equal("Post", redirectResult.ControllerName);
@@ -113,15 +112,12 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task Login_WithInvalidCredentials_ShouldReturnViewWithError()
         {
-            // Arrange
             var user = new User { Email = "test@example.com", Password = "testpass" };
             var mockDbSet = CreateMockDbSet(new List<User> { user });
             _userRepository.Setup(x => x.Users).Returns(mockDbSet.Object);
 
-            // Act
             var result = await _controller.Login(new LoginViewModel { Email = "wrong@example.com", Password = "wrongpass" });
 
-            // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.True(_controller.ModelState.ErrorCount > 0);
         }
@@ -129,7 +125,6 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task Register_WithValidData_ShouldCreateUserAndRedirect()
         {
-            // Arrange
             var registerModel = new RegisterViewModel
             {
                 Username = "newuser",
@@ -142,17 +137,15 @@ namespace BlogApp.Tests.Controllers
             var mockDbSet = CreateMockDbSet(new List<User>());
             _userRepository.Setup(x => x.Users).Returns(mockDbSet.Object);
             _userRepository.Setup(x => x.CreateUser(It.IsAny<User>())).Callback<User>(user => {
-                // Simulate user creation
+              
                 var users = new List<User> { user };
                 var newMockDbSet = CreateMockDbSet(users);
                 _userRepository.Setup(x => x.Users).Returns(newMockDbSet.Object);
             });
             _userRepository.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask).Verifiable();
 
-            // Act
             var result = await _controller.Register(registerModel);
 
-            // Assert
             _userRepository.Verify(x => x.CreateUser(It.IsAny<User>()), Times.Once);
             _userRepository.Verify(x => x.SaveAsync(), Times.Once);
             var redirectResult = Assert.IsType<RedirectToActionResult>(result);
@@ -162,7 +155,7 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task Register_WithInvalidData_ShouldReturnViewWithError()
         {
-            // Arrange
+           
             var registerModel = new RegisterViewModel
             {
                 Username = "",
@@ -175,15 +168,14 @@ namespace BlogApp.Tests.Controllers
             var mockDbSet = CreateMockDbSet(new List<User>());
             _userRepository.Setup(x => x.Users).Returns(mockDbSet.Object);
 
-            // Force model validation to fail
+            
             _controller.ModelState.AddModelError("Email", "Invalid email format");
             _controller.ModelState.AddModelError("Password", "Password must be at least 6 characters");
             _controller.ModelState.AddModelError("ConfirmPassword", "Passwords do not match");
 
-            // Act
+            
             var result = await _controller.Register(registerModel);
 
-            // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.True(_controller.ModelState.ErrorCount > 0);
             Assert.Equal(registerModel, viewResult.Model);
@@ -192,17 +184,14 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task Logout_ShouldSignOutAndRedirect()
         {
-            // Arrange
             _authService.Setup(x => x.SignOutAsync(
                 It.IsAny<HttpContext>(),
                 It.IsAny<string>(),
                 It.IsAny<AuthenticationProperties>()
             )).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _controller.Logout();
 
-            // Assert
             _authService.Verify(x => x.SignOutAsync(
                 It.IsAny<HttpContext>(),
                 It.IsAny<string>(),
@@ -216,15 +205,14 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task Profile_WithValidUsername_ShouldReturnView()
         {
-            // Arrange
+            
             var user = new User { UserName = "testuser", Name = "Test User", Image = "test.jpg" };
             var mockDbSet = CreateMockDbSet(new List<User> { user });
             _userRepository.Setup(x => x.Users).Returns(mockDbSet.Object);
 
-            // Act
+            
             var result = await _controller.Profile("testuser");
 
-            // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.NotNull(viewResult.Model);
         }
@@ -232,14 +220,14 @@ namespace BlogApp.Tests.Controllers
         [Fact]
         public async Task Profile_WithInvalidUsername_ShouldReturnNotFound()
         {
-            // Arrange
+           
             var mockDbSet = CreateMockDbSet(new List<User>());
             _userRepository.Setup(x => x.Users).Returns(mockDbSet.Object);
 
-            // Act
+            
             var result = await _controller.Profile("nonexistentuser");
 
-            // Assert
+           
             Assert.IsType<NotFoundResult>(result);
         }
     }

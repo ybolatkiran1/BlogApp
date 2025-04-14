@@ -47,7 +47,6 @@
                 </a>
 
                 @{
-                    // En popüler 10 etiket
                     var populerEtiketler = tumEtiketler.Take(10).ToList();
                     foreach (var etiket in populerEtiketler)
                     {
@@ -58,8 +57,6 @@
                     }
                 }
             </div>
-
-            <!-- tüm etiketler (açılır-kapanır) -->
             <div id="allTagsSection" class="mt-3" style="display: none;">
                 <div class="card">
                     <div class="card-body">
