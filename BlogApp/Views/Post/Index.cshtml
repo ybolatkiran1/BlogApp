@@ -121,7 +121,7 @@
                                 </div>
                                 <h5 class="card-title">@post.Title</h5>
                                 <div class="post-meta">
-                                    <span><i class="bi bi-person"></i> @post.User.Name</span>
+                                    <span><i class="bi bi-person"></i> @post.User.Name @post.User.Surname</span>
                                     <span><i class="bi bi-calendar"></i> @post.PublishedOn.ToString("dd.MM.yyyy HH:mm")</span>
                                     <span><i class="bi bi-chat"></i> @(post.Comments?.Count() ?? 0) yorum</span>
                                 </div>

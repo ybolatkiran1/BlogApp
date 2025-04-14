@@ -11,19 +11,22 @@ namespace BlogApp.Models
         [Display(Name = "Name")]
         public string? Name { get; set; }
         [Required]
+        [Display(Name = "Surname")]
+        public string? Surname { get; set; }
+        [Required]
         [EmailAddress]
         [Display(Name = "Eposta")]
         public string? Email { get; set; }
 
         [Required]
-        [StringLength(10, ErrorMessage = "{0} alaný en az {2} karakter uzunluðunda olmalýdýr.", MinimumLength = 6)]
+        [StringLength(10, ErrorMessage = "{0} alanÄ± en az {2} karakter uzunluÄŸunda olmalÄ±dÄ±r.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Parola")]
         public string? Password { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password), ErrorMessage = "Parolanýz eþleþmiyor.")]
+        [Compare(nameof(Password), ErrorMessage = "ParolanÄ±z eÅŸleÅŸmiyor.")]
         [Display(Name = "Parola")]
         public string? ConfirmPassword { get; set; }
     }

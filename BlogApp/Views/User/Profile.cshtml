@@ -12,8 +12,8 @@
             <div class="card">
                 <div class="card-body text-center">
                     <img src="~/img/users/@(Model.Image ?? "default.jpg")" class="rounded-circle mb-3 profile-image" style="width: 150px; height: 150px;" alt="Profil Resmi">
-                    <h4 class="card-title">@Model.UserName</h4>
-                    <p class="text-secondary">@Model.Name</p>
+                    <h4 class="card-title">@Model.Name @Model.Surname</h4>
+                    <p class="text-secondary">@Model.UserName</p>
                     @if (isProfileOwner)
                     {
                         <a href="/Post/Create" class="btn btn-primary mb-3">

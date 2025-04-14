@@ -9,6 +9,11 @@ namespace BlogApp.Models
         [Display(Name = "Ad")]
         public string? Name { get; set; }
 
+        [Required(ErrorMessage = "Soyad alanı zorunludur.")]
+        [StringLength(50, ErrorMessage = "Soyad alanı en fazla 50 karakter olabilir.")]
+        [Display(Name = "Soyad")]
+        public string? Surname { get; set; }
+
         [Required(ErrorMessage = "Kullanıcı adı zorunludur.")]
         [StringLength(30, ErrorMessage = "Kullanıcı adı en fazla 30 karakter olabilir.")]
         [Display(Name = "Kullanıcı Adı")]

@@ -54,6 +54,7 @@ namespace BlogApp.Controllers
                     {
                         UserName = model.Username,
                         Name = model.Name,
+                        Surname = model.Surname,
                         Email = model.Email,
                         Password = PasswordHasher.HashPassword(model.Password),
                         Image = "default.jpg"
@@ -151,6 +152,7 @@ namespace BlogApp.Controllers
             {
                 UserName = user.UserName!,
                 Name = user.Name!,
+                Surname = user.Surname!,
                 Image = user.Image,
                 Posts = paginatedPosts,
                 CurrentPage = page,
@@ -179,6 +181,7 @@ namespace BlogApp.Controllers
             var model = new EditProfileViewModel
             {
                 Name = user.Name,
+                Surname = user.Surname,
                 Email = user.Email,
                 UserName = user.UserName,
                 Image = user.Image
@@ -273,8 +276,9 @@ namespace BlogApp.Controllers
 
                 // Update user data
                 user.Name = model.Name;
-                user.UserName = model.UserName;
+                user.Surname = model.Surname;
                 user.Email = model.Email;
+                user.UserName = model.UserName;
 
                 // Process image upload if provided
                 if (imageFile != null && imageFile.Length > 0)

@@ -27,11 +27,13 @@ namespace DataAccessLayer.Data
                 {
 
                     context.Tags.AddRange(
-                    new Tag { Text = "web programlama", Url = "web-programlama", Color = TagColors.primary },
-                    new Tag { Text = "backend", Url = "backend", Color = TagColors.danger },
-                    new Tag { Text = "frontend", Url = "frontend", Color = TagColors.secondary },
-                    new Tag { Text = "game", Url = "game", Color = TagColors.success },
-                    new Tag { Text = "fullstack", Url = "full-stack", Color = TagColors.warning }
+                    new Tag { Text = "web programlama", Url = "web-programlama" },
+                    new Tag { Text = "backend", Url = "backend" },
+                    new Tag { Text = "frontend", Url = "frontend" },
+                    new Tag { Text = "game", Url = "game" },
+                    new Tag { Text = "fullstack", Url = "full-stack" },
+                    new Tag { Text = "mvc", Url = "mvc" },
+                    new Tag { Text = "asp", Url = "asp" }
                 );
                     context.SaveChanges();
                 }
@@ -42,11 +44,15 @@ namespace DataAccessLayer.Data
                         {
                             UserName = "ybolatkiran",
                             Image = "default.jpg",
-                            Name = "Emre Bolatkıran",
+                            Name = "Emre",
+                            Surname="Bolatkıran",
                             Email = "ybolatkiran@info.com",
                             Password = "123456",
                         },
-                            new User { UserName = "ybolatk", Image = "default.jpg", Name = "Yunus Bolatkıran", Email = "ybolatk@info.com", Password = "123456" }
+                            new User { UserName = "ybolatk", Image = "default.jpg", Name = "Yunus",Surname= "Bolatkıran", Email = "ybolatk@info.com", Password = "123456" },
+                            new User { UserName = "erensarialp", Image = "default.jpg", Name = "Eren",Surname= "Sarialp", Email = "erensarialp@info.com", Password = "123456" },
+                            new User { UserName = "bgozupek", Image = "default.jpg", Name = "Batuhan",Surname= "Gözüpek", Email = "bgozupek@info.com", Password = "123456" }
+
 
                 );
                     context.SaveChanges();
@@ -60,7 +66,7 @@ namespace DataAccessLayer.Data
                             Title = "Asp.Net Core MVC yapısı",
                             Content = @"Asp.Net Core MVC, modern web uygulamaları geliştirmek için güçlü ve esnek bir yapıdır. MVC (Model-View-Controller) deseni, uygulamanın iş mantığını, kullanıcı arayüzünü ve verileri birbirinden ayırarak daha düzenli ve sürdürülebilir bir yapı sunar.
 
-Model katmanı, uygulamanın veri kısmını temsil eder. Genellikle veritabanıyla etkileşim kuran sınıflar burada yer alır. View katmanı, kullanıcının gördüğü arayüzdür. Razor motoru kullanılarak HTML çıktılar oluşturulur. Controller katmanı ise gelen istekleri işler, gerekli işlemleri yapar ve uygun View’a yönlendirme yapar.
+Model katmanı, uygulamanın veri kısmını temsil eder. Genellikle veritabanıyla etkileşim kuran sınıflar burada yer alır. View katmanı, kullanıcının gördüğü arayüzdür. Razor motoru kullanılarak HTML çıktılar oluşturulur. Controller katmanı ise gelen istekleri işler, gerekli işlemleri yapar ve uygun View'a yönlendirme yapar.
 
 ASP.NET Core, modüler yapısı sayesinde bağımlılıkları azaltır ve performansı artırır. Middleware bileşenleri ile istek ve yanıtlar üzerinde özelleştirme yapılabilir. Dependency Injection (bağımlılık enjeksiyonu) doğrudan entegredir, bu da kodun test edilebilirliğini artırır.
 
@@ -71,7 +77,7 @@ Geliştiriciler için geniş bir kütüphane desteği, güçlü güvenlik altyap
                             IsActive = true,
                             Image = "4.jpg",
                             PublishedOn = DateTime.Now.AddDays(-10),
-                            Tags = context.Tags.Take(2).ToList(),
+                            Tags = context.Tags.Where(t => t.Text == "asp" || t.Text == "mvc").ToList(),
                             UserId = 1
                         },
                         new Post
@@ -79,7 +85,7 @@ Geliştiriciler için geniş bir kütüphane desteği, güçlü güvenlik altyap
                             Title = "Web Geliştirme Bootcamp",
                             Content = @"Web Geliştirme Bootcamp programı, sıfırdan profesyonel seviyeye kadar web geliştirme becerileri kazandırmayı hedefleyen yoğun ve uygulamalı bir eğitim sürecidir. Bu eğitim programı, katılımcıların HTML, CSS, JavaScript gibi temel teknolojilerden başlayarak, modern web geliştirme araçlarına kadar geniş bir yelpazede bilgi sahibi olmalarını sağlar.
 
-Bootcamp’te ilk aşamada katılımcılar web sayfalarının yapısını oluşturmayı, CSS ile bu sayfalara stil vermeyi ve JavaScript ile interaktif özellikler kazandırmayı öğrenirler. Daha sonra React.js gibi modern front-end kütüphaneleri ve ASP.NET Core gibi back-end teknolojileri devreye girer.
+Bootcamp'te ilk aşamada katılımcılar web sayfalarının yapısını oluşturmayı, CSS ile bu sayfalara stil vermeyi ve JavaScript ile interaktif özellikler kazandırmayı öğrenirler. Daha sonra React.js gibi modern front-end kütüphaneleri ve ASP.NET Core gibi back-end teknolojileri devreye girer.
 
 Veri yönetimi için SQL ve NoSQL veritabanları, versiyon kontrolü için Git, proje yönetimi için Trello ve GitHub gibi araçlar tanıtılır. Eğitimin son bölümünde ekip çalışmaları ve proje bazlı uygulamalar yapılır. Katılımcılar, kendi portföylerini oluşturabilecekleri gerçek dünya projeleri geliştirirler.
 
@@ -115,11 +121,11 @@ Eğitim sonunda katılımcılar, kendi mobil uygulamalarını mağazalara yükle
                         new Post
                         {
                             Title = "Veri Bilimi ve Yapay Zeka Bootcamp",
-                            Content = @"Veri Bilimi ve Yapay Zeka Bootcamp’i, geleceğin en önemli meslek gruplarından biri olan veri bilimciliğe adım atmak isteyenler için özel olarak hazırlanmış bir eğitim programıdır. Bu program sayesinde katılımcılar hem teorik hem de pratik anlamda güçlü bir temel oluşturur.
+                            Content = @"Veri Bilimi ve Yapay Zeka Bootcamp'i, geleceğin en önemli meslek gruplarından biri olan veri bilimciliğe adım atmak isteyenler için özel olarak hazırlanmış bir eğitim programıdır. Bu program sayesinde katılımcılar hem teorik hem de pratik anlamda güçlü bir temel oluşturur.
 
 Eğitimde ilk olarak veri analizi ve istatistiksel yaklaşımlar öğretilir. Python dili üzerinden NumPy, Pandas, Matplotlib ve Seaborn gibi kütüphanelerle veri işleme ve görselleştirme teknikleri anlatılır. Ardından makine öğrenmesi algoritmalarına geçilir.
 
-Makine öğrenmesi bölümü, gözetimli ve gözetimsiz öğrenme algoritmalarını kapsar. Sınıflandırma, regresyon, kümeleme gibi tekniklerle farklı veri setleri üzerinde uygulamalar yapılır. Son olarak derin öğrenme konularına geçilerek TensorFlow ve Keras gibi framework’ler ile yapay sinir ağları modellenir.
+Makine öğrenmesi bölümü, gözetimli ve gözetimsiz öğrenme algoritmalarını kapsar. Sınıflandırma, regresyon, kümeleme gibi tekniklerle farklı veri setleri üzerinde uygulamalar yapılır. Son olarak derin öğrenme konularına geçilerek TensorFlow ve Keras gibi framework'ler ile yapay sinir ağları modellenir.
 
 Gerçek dünya problemlerinin çözüldüğü proje bazlı uygulamalar sayesinde katılımcılar, portföylerine güçlü projeler eklerler ve veri odaklı kariyer hedeflerine sağlam adımlarla ilerlerler."
 ,
@@ -165,7 +171,7 @@ Bu eğitim sonunda katılımcılar, güvenli sistemler tasarlayabilir, zafiyet a
                         new Post
                         {
                             Title = "JavaScript ve Front-End Bootcamp",
-                            Content = "JavaScript ve Front-End Eğitimi Devam Ediyor\r\nFront-End dünyası, her geçen gün gelişmeye ve dönüşmeye devam ediyor. Kullanıcı deneyimini merkeze alan bu alanda, özellikle JavaScript'in önemi yadsınamaz. Modern web uygulamalarının temel taşı haline gelen JavaScript, yalnızca etkileşimli sayfalar oluşturmakla kalmıyor, aynı zamanda tüm kullanıcı arayüzlerinin bel kemiğini oluşturuyor.\r\n\r\nNeden JavaScript?\r\nJavaScript, HTML ve CSS ile birlikte web’in 3 temel teknolojisinden biridir. Tarayıcıda çalışan bir programlama dili olması sayesinde, kullanıcılarla doğrudan etkileşim kurabilen arayüzler tasarlamak mümkündür. Üstelik bu dil yalnızca basit animasyonlar veya buton işlevleriyle sınırlı değil; API entegrasyonları, veri işleme, form validasyonları ve hatta oyunlar geliştirmek için bile kullanılabiliyor.\r\n\r\nFront-End Framework ve Kütüphaneler\r\nJavaScript’in gücünü daha etkili kullanmak için birçok framework ve kütüphane geliştirildi. Eğitimde özellikle şu konulara ağırlık veriliyor:\r\n\r\nReact.js: Facebook tarafından geliştirilen bu kütüphane, bileşen tabanlı mimarisiyle en çok tercih edilen Front-End araçlarından biri. Reaktif ve yeniden kullanılabilir bileşenler sayesinde büyük projelerde bile düzenli bir yapı sağlar.\r\n\r\nVue.js: Öğrenmesi kolay, kullanımı pratik olan bu framework, özellikle küçük ve orta ölçekli projeler için idealdir.\r\n\r\nBootstrap ve Tailwind CSS: Arayüz geliştirmeyi hızlandıran bu araçlar sayesinde duyarlı ve modern tasarımlar üretmek oldukça kolay hale geliyor.\r\n\r\nEğitimde Neler Öğreniliyor?\r\nEğitim boyunca katılımcılar sadece kod yazmakla kalmıyor, aynı zamanda yazılım geliştirme süreçlerinin temellerini de öğreniyorlar. Özellikle proje bazlı ilerleyen derslerde:\r\n\r\nHTML5 ve semantik etiketler\r\n\r\nCSS3 ile stillendirme ve layout teknikleri\r\n\r\nFlexbox, Grid yapıları\r\n\r\nJavaScript temelleri (değişkenler, döngüler, koşullar, fonksiyonlar)\r\n\r\nDOM Manipülasyonu\r\n\r\nEvent Handling (Olay Yönetimi)\r\n\r\nAsenkron programlama (Promises, async/await)\r\n\r\nAPI kullanımı ve veri çekme\r\n\r\nWeb performansı ve SEO dostu yapılar\r\n\r\ngibi konular ele alınıyor.\r\n\r\nProje Odaklı Yaklaşım\r\nTeorik bilginin yanı sıra uygulamalı projelerle öğrencilerin kendilerini geliştirmesi hedefleniyor. Katılımcılar, portföylerine ekleyebilecekleri çeşitli projeler geliştiriyor. Bu projeler arasında:\r\n\r\nKişisel blog sayfası\r\n\r\nHava durumu uygulaması\r\n\r\nTo-do list uygulaması\r\n\r\nFilm arama motoru (OMDb API entegrasyonlu)\r\n\r\nBasit bir e-ticaret arayüzü\r\n\r\ngibi çalışmalar yer alıyor.\r\n\r\nEğitim Sonunda Ne Hedefleniyor?\r\nBu eğitim sayesinde katılımcılar, sıfırdan kendi web sitelerini tasarlayabilir hale geliyor. Ayrıca bir Front-End geliştirici olarak freelance işler alabilecek düzeye gelebiliyorlar. Aynı zamanda, Full-Stack Developer yolculuğunun da temelini oluşturmuş oluyorlar.",
+                            Content = "JavaScript ve Front-End Eğitimi Devam Ediyor\r\nFront-End dünyası, her geçen gün gelişmeye ve dönüşmeye devam ediyor. Kullanıcı deneyimini merkeze alan bu alanda, özellikle JavaScript'in önemi yadsınamaz. Modern web uygulamalarının temel taşı haline gelen JavaScript, yalnızca etkileşimli sayfalar oluşturmakla kalmıyor, aynı zamanda tüm kullanıcı arayüzlerinin bel kemiğini oluşturuyor.\r\n\r\nNeden JavaScript?\r\nJavaScript, HTML ve CSS ile birlikte web'in 3 temel teknolojisinden biridir. Tarayıcıda çalışan bir programlama dili olması sayesinde, kullanıcılarla doğrudan etkileşim kurabilen arayüzler tasarlamak mümkündür. Üstelik bu dil yalnızca basit animasyonlar veya buton işlevleriyle sınırlı değil; API entegrasyonları, veri işleme, form validasyonları ve hatta oyunlar geliştirmek için bile kullanılabiliyor.\r\n\r\nFront-End Framework ve Kütüphaneler\r\nJavaScript'in gücünü daha etkili kullanmak için birçok framework ve kütüphane geliştirildi. Eğitimde özellikle şu konulara ağırlık veriliyor:\r\n\r\nReact.js: Facebook tarafından geliştirilen bu kütüphane, bileşen tabanlı mimarisiyle en çok tercih edilen Front-End araçlarından biri. Reaktif ve yeniden kullanılabilir bileşenler sayesinde büyük projelerde bile düzenli bir yapı sağlar.\r\n\r\nVue.js: Öğrenmesi kolay, kullanımı pratik olan bu framework, özellikle küçük ve orta ölçekli projeler için idealdir.\r\n\r\nBootstrap ve Tailwind CSS: Arayüz geliştirmeyi hızlandıran bu araçlar sayesinde duyarlı ve modern tasarımlar üretmek oldukça kolay hale geliyor.\r\n\r\nEğitimde Neler Öğreniliyor?\r\nEğitim boyunca katılımcılar sadece kod yazmakla kalmıyor, aynı zamanda yazılım geliştirme süreçlerinin temellerini de öğreniyorlar. Özellikle proje bazlı ilerleyen derslerde:\r\n\r\nHTML5 ve semantik etiketler\r\n\r\nCSS3 ile stillendirme ve layout teknikleri\r\n\r\nFlexbox, Grid yapıları\r\n\r\nJavaScript temelleri (değişkenler, döngüler, koşullar, fonksiyonlar)\r\n\r\nDOM Manipülasyonu\r\n\r\nEvent Handling (Olay Yönetimi)\r\n\r\nAsenkron programlama (Promises, async/await)\r\n\r\nAPI kullanımı ve veri çekme\r\n\r\nWeb performansı ve SEO dostu yapılar\r\n\r\ngibi konular ele alınıyor.\r\n\r\nProje Odaklı Yaklaşım\r\nTeorik bilginin yanı sıra uygulamalı projelerle öğrencilerin kendilerini geliştirmesi hedefleniyor. Katılımcılar, portföylerine ekleyebilecekleri çeşitli projeler geliştiriyor. Bu projeler arasında:\r\n\r\nKişisel blog sayfası\r\n\r\nHava durumu uygulaması\r\n\r\nTo-do list uygulaması\r\n\r\nFilm arama motoru (OMDb API entegrasyonlu)\r\n\r\nBasit bir e-ticaret arayüzü\r\n\r\ngibi çalışmalar yer alıyor.\r\n\r\nEğitim Sonunda Ne Hedefleniyor?\r\nBu eğitim sayesinde katılımcılar, sıfırdan kendi web sitelerini tasarlayabilir hale geliyor. Ayrıca bir Front-End geliştirici olarak freelance işler alabilecek düzeye gelebiliyorlar. Aynı zamanda, Full-Stack Developer yolculuğunun da temelini oluşturmuş oluyorlar.",
                             Description = "JavaScript ve Front-End ders içerikleri.",
                             Url = "javascript-ve-front-end-bootcamp",
                             IsActive = true,
@@ -177,7 +183,7 @@ Bu eğitim sonunda katılımcılar, güvenli sistemler tasarlayabilir, zafiyet a
                          new Post
                          {
                              Title = "C# ile Nesne Yönelimli Programlama",
-                             Content = @"Nesne Yönelimli Programlama (OOP), yazılım geliştirme sürecinde kodun daha modüler, okunabilir ve sürdürülebilir olmasını sağlayan bir paradigmadır. C# dili, OOP prensiplerini tam anlamıyla destekleyen modern bir dildir. Bu yazıda, C# ile OOP’nin temel kavramlarına değineceğiz: sınıflar, nesneler, kalıtım, çok biçimlilik, kapsülleme ve soyutlama.
+                             Content = @"Nesne Yönelimli Programlama (OOP), yazılım geliştirme sürecinde kodun daha modüler, okunabilir ve sürdürülebilir olmasını sağlayan bir paradigmadır. C# dili, OOP prensiplerini tam anlamıyla destekleyen modern bir dildir. Bu yazıda, C# ile OOP'nin temel kavramlarına değineceğiz: sınıflar, nesneler, kalıtım, çok biçimlilik, kapsülleme ve soyutlama.
 
 Sınıflar, bir nesnenin şablonunu oluşturur. Örneğin bir 'Araba' sınıfı oluşturup, renk, model ve hız gibi özellikleri tanımlayabiliriz. Daha sonra bu sınıftan birçok farklı 'Araba' nesnesi türetilebilir.
 
@@ -189,7 +195,7 @@ Kapsülleme ile sınıfın iç yapısı gizlenerek, dış dünyaya yalnızca ger
 
 Son olarak soyutlama, karmaşık sistemleri basitleştirerek sadece gerekli bilgileri öne çıkarmaya yarar.
 
-C#’ta OOP uygulamaları ile büyük ölçekli yazılımlar daha güvenli ve sürdürülebilir hale getirilebilir.",
+C#'ta OOP uygulamaları ile büyük ölçekli yazılımlar daha güvenli ve sürdürülebilir hale getirilebilir.",
                              Description = "C# dilinde OOP kavramları detaylı şekilde anlatılmaktadır.",
                              Url = "csharp-nesne-yonelimli-programlama",
                              IsActive = true,
@@ -225,7 +231,7 @@ Son olarak istatistiksel analiz ve modelleme adımları ile veriden anlamlı son
 
 React'in temelinde JSX (JavaScript XML) yer alır. JSX, HTML benzeri sözdizimini JavaScript içinde yazmamıza olanak tanır. Bu yapı sayesinde UI bileşenlerini modüler olarak tanımlayıp tekrar kullanılabilir hale getirebiliriz.
 
-React’te her şey bir bileşendir. Bileşenler ya sınıf (class component) ya da fonksiyon (function component) olarak tanımlanabilir. Günümüzde genellikle `useState`, `useEffect` gibi hook’lar ile fonksiyonel bileşenler tercih edilmektedir.
+React'te her şey bir bileşendir. Bileşenler ya sınıf (class component) ya da fonksiyon (function component) olarak tanımlanabilir. Günümüzde genellikle `useState`, `useEffect` gibi hook'lar ile fonksiyonel bileşenler tercih edilmektedir.
 
 State yönetimi React'te önemli bir konudur. Bileşenlerin durumlarını yönetmek için `useState`, global state yönetimi için ise Redux veya Context API gibi yapılar kullanılır.
 
@@ -238,14 +244,14 @@ React sayesinde, performansı yüksek, ölçeklenebilir ve kullanıcı dostu mod
         Image = "12.jpg",
         PublishedOn = DateTime.Now.AddDays(-18),
         Tags = context.Tags.Skip(2).Take(2).ToList(),
-        UserId = 2
+        UserId = 4
     },
     new Post
     {
         Title = "SQL Temelleri ve Veritabanı Yönetimi",
         Content = @"SQL (Structured Query Language), ilişkisel veritabanları ile iletişim kurmak için kullanılan standart bir dildir. MySQL, PostgreSQL, SQL Server gibi veritabanı yönetim sistemlerinde ortak olarak kullanılan bu dil, veri çekme, güncelleme, silme ve ekleme işlemlerinin temelini oluşturur.
 
-Bir veritabanında en temel yapı tablo (table)’dur. Tablo, satır (row) ve sütunlardan (column) oluşur. `SELECT` komutu, tablodan veri çekmek için kullanılırken, `INSERT`, `UPDATE` ve `DELETE` komutları sırasıyla veri ekleme, güncelleme ve silme işlemleri için kullanılır.
+Bir veritabanında en temel yapı tablo (table)'dur. Tablo, satır (row) ve sütunlardan (column) oluşur. `SELECT` komutu, tablodan veri çekmek için kullanılırken, `INSERT`, `UPDATE` ve `DELETE` komutları sırasıyla veri ekleme, güncelleme ve silme işlemleri için kullanılır.
 
 WHERE, JOIN, GROUP BY, ORDER BY gibi ifadeler, sorgulara koşul ve filtreler eklememizi sağlar. Özellikle `JOIN` yapıları, birden fazla tablonun birleştirilerek ortak verilerin çekilmesini sağlar.
 
@@ -256,8 +262,82 @@ SQL dilinin iyi öğrenilmesi, veri ile çalışan her geliştirici için büyü
         Image = "13.jpg",
         PublishedOn = DateTime.Now.AddDays(-30),
         Tags = context.Tags.Take(1).ToList(),
-        UserId = 2
-    }
+        UserId = 3
+    },
+    new Post
+    {
+        Title = "Entity Framework Core ile Veritabanı Yönetimi",
+        Content = @"Entity Framework Core (EF Core), Microsoft tarafından geliştirilen açık kaynaklı bir ORM (Object-Relational Mapping) aracıdır. .NET geliştiricileri için veritabanı işlemlerini kod tabanlı yönetmeyi kolaylaştırır.
+
+EF Core sayesinde veritabanı ile doğrudan SQL yazmadan etkileşim kurabiliriz. Model sınıfları üzerinden veritabanı tabloları otomatik olarak oluşturulabilir. Code First yaklaşımı ile domain modelleri üzerinden veritabanı yapısı şekillendirilir.
+
+`DbContext`, veritabanı bağlantısını temsil ederken, `DbSet<T>` koleksiyonları tablo gibi davranır. LINQ sorguları ile karmaşık SQL sorgularını sade bir şekilde yazmak mümkündür.
+
+EF Core, migrations sistemiyle veritabanı şemasındaki değişiklikleri yönetmeyi kolaylaştırır. Ayrıca performans, caching, lazy loading ve ilişki yönetimi gibi birçok gelişmiş özellik sunar.
+
+Modern .NET uygulamalarında EF Core, veritabanı işlemlerini hızlı ve güvenli şekilde gerçekleştirmek için güçlü bir araçtır.",
+        Description = "EF Core ile veritabanı işlemleri ve Code First mimarisi.",
+        Url = "efcore-veritabani-yonetimi",
+        IsActive = true,
+        Image = "17.jpg",
+        PublishedOn = DateTime.Now.AddDays(-10),
+        Tags = context.Tags.Where(t => t.Text == "backend" || t.Text == "web programlama").ToList(),
+        UserId = 4
+    },
+new Post
+{
+    Title = "Web API Geliştirme Rehberi",
+    Content = @"Web API’ler, istemciler ile sunucular arasında veri alışverişi yapılmasını sağlayan yapılar olup, modern yazılım geliştirme sürecinde kritik bir rol oynar. ASP.NET Core ile RESTful Web API'ler geliştirmek oldukça kolaydır.
+
+Bir Web API, genellikle JSON formatında veri gönderir ve alır. `HttpGet`, `HttpPost`, `HttpPut`, `HttpDelete` gibi HTTP metodları ile farklı işlemler tanımlanabilir. ASP.NET Core'da bu işlemler controller sınıfları ile gerçekleştirilir.
+
+Swagger gibi araçlarla API dokümantasyonu yapılabilir. Ayrıca `JWT` ile güvenlik önlemleri alınabilir. Model validation, exception handling, logging gibi yapılarla daha sağlam ve üretime uygun API’ler geliştirilebilir.
+
+Frontend uygulamalarının backend ile entegrasyonunda API'ler büyük önem taşır. Bu nedenle temiz, ölçeklenebilir ve test edilebilir API’ler geliştirmek kritik öneme sahiptir.",
+    Description = "RESTful API geliştirme süreci ve ASP.NET Core ile örnekler.",
+    Url = "web-api-rehberi",
+    IsActive = true,
+    Image = "14.jpg",
+    PublishedOn = DateTime.Now.AddDays(-15),
+    Tags = context.Tags.Where(t => t.Text == "backend" || t.Text == "fullstack").ToList(),
+    UserId = 3
+},
+new Post
+{
+    Title = "Frontend vs Backend: Farklar ve Uyumluluk",
+    Content = @"Frontend ve backend, modern web geliştirme sürecinin iki temel bileşenidir. Her biri farklı teknolojiler ve sorumluluk alanları ile sistemin bir parçasını oluşturur.
+
+**Frontend**, kullanıcıların doğrudan etkileşime geçtiği kısımdır. HTML, CSS, JavaScript ve framework'ler (React, Vue, Angular) ile geliştirilir. UI/UX tasarımı, form validasyonu ve kullanıcı deneyimi gibi konuları kapsar.
+
+**Backend** ise sunucu tarafıdır. Veritabanı işlemleri, kimlik doğrulama, iş kuralları ve API yönetimi gibi arka planda çalışan işlemleri kapsar. ASP.NET Core, Node.js, Django gibi teknolojiler burada kullanılır.
+
+Bu iki yapı arasında iyi bir uyum kurulmalı, veri alışverişi ve güvenlik doğru şekilde sağlanmalıdır. Fullstack geliştiriciler, bu iki dünyayı bir araya getirerek uçtan uca çözümler sunar.",
+    Description = "Frontend ve backend kavramlarının karşılaştırılması.",
+    Url = "frontend-vs-backend",
+    IsActive = true,
+    Image = "15.jpg",
+    PublishedOn = DateTime.Now.AddDays(-21),
+    Tags = context.Tags.Where(t => t.Text == "frontend" || t.Text == "backend").ToList(),
+    UserId = 4
+},
+new Post
+{
+    Title = "Oyun Geliştirmeye Nereden Başlamalı?",
+    Content = @"Oyun geliştirme, yaratıcılık ile teknolojiyi birleştiren heyecan verici bir süreçtir. İlk adım olarak oyun motoru seçimi yapılmalıdır. Unity ve Unreal Engine, yeni başlayanlar için en popüler motorlardır.
+
+Programlama bilgisi olarak C# (Unity için) ya da C++ (Unreal için) öğrenilmelidir. Temel oyun mekaniği, fizik hesaplamaları, karakter kontrolü ve UI gibi konular öğrenildikten sonra ilk oyun projeleri geliştirilmeye başlanabilir.
+
+Game loop mantığı, sahne yönetimi, input kontrolü ve event sistemleri oyun geliştirme sürecinin temel taşlarıdır. Asset kullanımı ve oyun içi ses/grafik entegrasyonları da projenin görsel yönünü zenginleştirir.
+
+Oyun fikri, mekaniklerden önce gelir. İyi bir fikir, basit bir yapıyla bile dikkat çekici oyunlara dönüşebilir. Başlamak için küçük projeler ve game jam'lere katılım önerilir.",
+    Description = "Yeni başlayanlar için oyun geliştirme rehberi.",
+    Url = "oyun-gelistirme-baslangic",
+    IsActive = true,
+    Image = "16.jpg",
+    PublishedOn = DateTime.Now.AddDays(-12),
+    Tags = context.Tags.Where(t => t.Text == "game").ToList(),
+    UserId = 3
+}
                         );
                     context.SaveChanges();
                 }

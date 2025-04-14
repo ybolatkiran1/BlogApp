@@ -37,8 +37,20 @@
       "PackagePath": "staticwebassets\\img\\post\\13.jpg"
     },
     {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\17505ff8-2ec0-4bac-9a8b-dcfb129e3f09.jpg",
-      "PackagePath": "staticwebassets\\img\\post\\17505ff8-2ec0-4bac-9a8b-dcfb129e3f09.jpg"
+      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\14.jpg",
+      "PackagePath": "staticwebassets\\img\\post\\14.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\15.jpg",
+      "PackagePath": "staticwebassets\\img\\post\\15.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\16.png",
+      "PackagePath": "staticwebassets\\img\\post\\16.png"
+    },
+    {
+      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\17.jpg",
+      "PackagePath": "staticwebassets\\img\\post\\17.jpg"
     },
     {
       "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\2.jpg",
@@ -53,10 +65,6 @@
       "PackagePath": "staticwebassets\\img\\post\\4.jpg"
     },
     {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\45e32287-5153-4a83-a8f4-764f6dd10806.jpg",
-      "PackagePath": "staticwebassets\\img\\post\\45e32287-5153-4a83-a8f4-764f6dd10806.jpg"
-    },
-    {
       "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\5.jpg",
       "PackagePath": "staticwebassets\\img\\post\\5.jpg"
     },
@@ -65,20 +73,8 @@
       "PackagePath": "staticwebassets\\img\\post\\6.jpg"
     },
     {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\6589e095-3ec2-4e9f-9df6-41830f8bfd5a.jpg",
-      "PackagePath": "staticwebassets\\img\\post\\6589e095-3ec2-4e9f-9df6-41830f8bfd5a.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\6daba58c-6ba6-4c34-b7fd-8670cfde1b9d.jpg",
-      "PackagePath": "staticwebassets\\img\\post\\6daba58c-6ba6-4c34-b7fd-8670cfde1b9d.jpg"
-    },
-    {
       "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\7.jpg",
       "PackagePath": "staticwebassets\\img\\post\\7.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\7dcb5071-e9b4-428f-857a-155327002d3b.webp",
-      "PackagePath": "staticwebassets\\img\\post\\7dcb5071-e9b4-428f-857a-155327002d3b.webp"
     },
     {
       "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\8.jpg",
@@ -87,30 +83,6 @@
     {
       "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\9.jpg",
       "PackagePath": "staticwebassets\\img\\post\\9.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\a33b2049-9d4d-42b1-8349-4aae87c77521.jpg",
-      "PackagePath": "staticwebassets\\img\\post\\a33b2049-9d4d-42b1-8349-4aae87c77521.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\b3e363b7-d302-4ac7-93d8-e7894300fb6e.jpg",
-      "PackagePath": "staticwebassets\\img\\post\\b3e363b7-d302-4ac7-93d8-e7894300fb6e.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\f8784369-e2e7-475c-9884-2f2fd48918c0.jpg",
-      "PackagePath": "staticwebassets\\img\\post\\f8784369-e2e7-475c-9884-2f2fd48918c0.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\post\\ffee2da7-acbb-4b6e-a63f-7418dab68584.webp",
-      "PackagePath": "staticwebassets\\img\\post\\ffee2da7-acbb-4b6e-a63f-7418dab68584.webp"
-    },
-    {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\users\\38dc7525-8187-4bc7-8a66-9f7addd3ce04.png",
-      "PackagePath": "staticwebassets\\img\\users\\38dc7525-8187-4bc7-8a66-9f7addd3ce04.png"
-    },
-    {
-      "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\users\\7daa8886-1700-4448-bfb8-33741f6c5d43.jpg",
-      "PackagePath": "staticwebassets\\img\\users\\7daa8886-1700-4448-bfb8-33741f6c5d43.jpg"
     },
     {
       "Id": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\wwwroot\\img\\users\\default.jpg",
