@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4GfIVZ8QiDg=",
+  "dgSpecHash": "MyWXzgnaR8A=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Emre\\Desktop\\denemeblogapp\\BlogApp.Test\\BlogApp.Test.csproj",
+  "projectFilePath": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp.Test\\BlogApp.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Emre\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\Emre\\.nuget\\packages\\coverlet.collector\\6.0.2\\coverlet.collector.6.0.2.nupkg.sha512",

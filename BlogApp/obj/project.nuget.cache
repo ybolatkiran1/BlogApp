@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LBsq6DTivS0=",
+  "dgSpecHash": "/WK5Uwkfre4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Emre\\Desktop\\denemeblogapp\\BlogApp\\BlogApp.csproj",
+  "projectFilePath": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\BlogApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Emre\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Emre\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",

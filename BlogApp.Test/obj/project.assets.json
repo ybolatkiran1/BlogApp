@@ -3334,11 +3334,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Emre\\Desktop\\denemeblogapp\\BlogApp.Test\\BlogApp.Test.csproj",
+      "projectUniqueName": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp.Test\\BlogApp.Test.csproj",
       "projectName": "BlogApp.Test",
-      "projectPath": "C:\\Users\\Emre\\Desktop\\denemeblogapp\\BlogApp.Test\\BlogApp.Test.csproj",
+      "projectPath": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp.Test\\BlogApp.Test.csproj",
       "packagesPath": "C:\\Users\\Emre\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Emre\\Desktop\\denemeblogapp\\BlogApp.Test\\obj\\",
+      "outputPath": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3359,8 +3359,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Emre\\Desktop\\denemeblogapp\\BlogApp\\BlogApp.csproj": {
-              "projectPath": "C:\\Users\\Emre\\Desktop\\denemeblogapp\\BlogApp\\BlogApp.csproj"
+            "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\BlogApp.csproj": {
+              "projectPath": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\BlogApp.csproj"
             }
           }
         }

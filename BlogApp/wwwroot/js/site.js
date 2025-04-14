@@ -181,29 +181,34 @@ $(document).ready(function () {
 
     
 
-// URL otomatik oluşturma
-document.querySelector('#Title').addEventListener('blur', function () {
-    let titleValue = this.value;
-    let urlField = document.querySelector('#Url');
+$(document).ready(function () {
+    // Başlık değiştirildiğinde URL'nin de güncellenmesini sağlayan fonksiyon
+    $('#Title').on('input', function () {
+        let titleValue = $(this).val().trim();
+        let urlField = $('#Url');
 
-    // URL alanı boşsa ve başlık doldurulduysa
-    if (urlField.value === '' && titleValue !== '') {
-        // Türkçe karakterleri değiştir ve URL'ye uygun hale getir
+        // Başlığı URL'ye dönüştür
         let url = titleValue
             .toLowerCase()
+            // Türkçe karakterleri değiştir
             .replace(/ı/g, 'i')
             .replace(/ğ/g, 'g')
             .replace(/ü/g, 'u')
             .replace(/ş/g, 's')
             .replace(/ç/g, 'c')
             .replace(/ö/g, 'o')
+            // Birden fazla boşluk ve özel karakterleri tek tire ile değiştir
             .replace(/\s+/g, '-')
-            .replace(/[^a-z0-9\-]/g, '');
+            .replace(/[^a-z0-9\-]/g, '')
+            // Birden fazla tireyi tek tireye düşür
+            .replace(/-+/g, '-')
+            // Başta ve sonda tire varsa kaldır
+            .replace(/^-+|-+$/g, '');
 
-        urlField.value = url;
-    }
+        // URL alanını güncelle
+        urlField.val(url);
+    });
 });
-
 // Etiket giriş sistemi
 document.querySelector('#tagsInput').addEventListener('input', function () {
     let tags = this.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');

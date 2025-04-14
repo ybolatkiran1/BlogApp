@@ -22,6 +22,7 @@ namespace BlogApp.Models
         [Display(Name = "URL")]
         public string Url { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "Resim alanı zorunludur.")]
         [Display(Name = "Resim")]
         public IFormFile? Image { get; set; }
 
