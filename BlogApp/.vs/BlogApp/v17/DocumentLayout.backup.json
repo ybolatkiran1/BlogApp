@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{28E106B7-1BD6-46EF-8372-4A287A4B4BB8}|BlogApp.csproj|c:\\users\\emre\\documents\\github\\blogapp\\blogapp\\data\\concrete\\efcore\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{28E106B7-1BD6-46EF-8372-4A287A4B4BB8}|BlogApp.csproj|solutionrelative:data\\concrete\\efcore\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{28E106B7-1BD6-46EF-8372-4A287A4B4BB8}|BlogApp.csproj|c:\\users\\emre\\documents\\github\\blogapp\\blogapp\\views\\user\\editprofile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{28E106B7-1BD6-46EF-8372-4A287A4B4BB8}|BlogApp.csproj|solutionrelative:views\\user\\editprofile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28E106B7-1BD6-46EF-8372-4A287A4B4BB8}|BlogApp.csproj|c:\\users\\emre\\documents\\github\\blogapp\\blogapp\\data\\concrete\\efcore\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{28E106B7-1BD6-46EF-8372-4A287A4B4BB8}|BlogApp.csproj|solutionrelative:data\\concrete\\efcore\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,26 +26,25 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "SeedData.cs",
               "DocumentMoniker": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\Data\\Concrete\\EFCore\\SeedData.cs",
               "RelativeDocumentMoniker": "Data\\Concrete\\EFCore\\SeedData.cs",
               "ToolTip": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\Data\\Concrete\\EFCore\\SeedData.cs",
               "RelativeToolTip": "Data\\Concrete\\EFCore\\SeedData.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAQwDMAAACsAAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAQwDcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T18:26:26.603Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T18:26:26.603Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "EditProfile.cshtml",
               "DocumentMoniker": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\Views\\User\\EditProfile.cshtml",
               "RelativeDocumentMoniker": "Views\\User\\EditProfile.cshtml",
               "ToolTip": "C:\\Users\\Emre\\Documents\\GitHub\\BlogApp\\BlogApp\\Views\\User\\EditProfile.cshtml",
               "RelativeToolTip": "Views\\User\\EditProfile.cshtml",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAkwH8AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAkwFAAAABdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-04-14T18:23:20.91Z",
               "EditorCaption": ""
