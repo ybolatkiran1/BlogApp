@@ -71,5 +71,10 @@ namespace BlogApp.Data.Concrete.EFCore
             _context.Posts.Remove(post);
             _context.SaveChanges();
         }
+        public async Task<bool> PostTitleExistsAsync(string title)
+        {
+            return await _context.Posts.AnyAsync(p => p.Title.ToLower() == title.ToLower());
+        }
+
     }
 }

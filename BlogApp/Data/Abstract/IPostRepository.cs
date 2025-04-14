@@ -18,5 +18,7 @@ namespace BlogApp.Data.Abstract
         Task AddTagAsync(Tag tag);
         Task SaveAsync();
         void DeletePost(Post post);
+        Task<bool> PostTitleExistsAsync(string title);
+
     }
 }

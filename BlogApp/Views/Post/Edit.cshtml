@@ -53,6 +53,7 @@
                             <label asp-for="TagsInput" class="form-label">Etiketler</label>
                             <input asp-for="TagsInput" class="form-control" id="tagsInput" />
                             <small class="form-text text-secondary">Etiketleri virgülle ayırarak giriniz</small>
+                            <span asp-validation-for="TagsInput" class="text-danger"></span>
                             <div id="tagsList" class="mt-2"></div>
                         </div>
                         <div class="d-flex justify-content-between">

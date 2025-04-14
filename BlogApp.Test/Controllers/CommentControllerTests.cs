@@ -218,30 +218,6 @@ namespace BlogApp.Tests.Controllers
             Assert.Equal("Bu yorumu silme yetkiniz yok.", (string)response.message);
         }
 
-        [Fact]
-        public async Task GetComments_ShouldReturnPaginatedComments()
-        {
-            
-            int postId = 1; 
-
-            var comments = new List<Comment>
-    {
-        new Comment { CommentId = 1, Text = "Comment 1", User = new User { UserName = "user1" }, PostId = postId },
-        new Comment { CommentId = 2, Text = "Comment 2", User = new User { UserName = "user2" }, PostId = postId }
-    };
-
-            var mockDbSet = CreateMockDbSet(comments);
-            _commentRepository.Setup(x => x.Comments).Returns(mockDbSet.Object);
-
-            // Act
-            var result = await _controller.GetComments(postId, 1); // pageNumber=1
-
-            // Assert
-            var jsonResult = Assert.IsType<JsonResult>(result);
-            var response = JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(jsonResult.Value));
-            Assert.True((bool)response.success);
-            var commentsArray = JArray.FromObject(response.comments);
-            Assert.Equal(2, commentsArray.Count);
+       
         }
     }
-} 

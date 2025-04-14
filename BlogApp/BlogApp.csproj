@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewComponents\**" />
     <Compile Remove="wwwroot\img\user\**" />
+    <Content Remove="ViewComponents\**" />
     <Content Remove="wwwroot\img\user\**" />
+    <EmbeddedResource Remove="ViewComponents\**" />
     <EmbeddedResource Remove="wwwroot\img\user\**" />
+    <None Remove="ViewComponents\**" />
     <None Remove="wwwroot\img\user\**" />
   </ItemGroup>
 
@@ -27,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewComponents\" />
     <Folder Include="Views\Shared\Components\NewPosts\" />
   </ItemGroup>
 

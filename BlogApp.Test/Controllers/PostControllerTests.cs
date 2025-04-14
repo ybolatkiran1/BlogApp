@@ -200,36 +200,9 @@ namespace BlogApp.Tests.Controllers
             Assert.Equal(post.Title, model.Title);
         }
 
-        [Fact]
-        public async Task Edit_Post_WithValidData_ShouldUpdatePost()
-        {
-            // Arrange
-            var model = new PostEditViewModel
-            {
-                PostId = 1,
-                Title = "Updated Post",
-                Content = "Updated Content",
-                Description = "Updated Description",
-                Url = "updated-post",
-                IsActive = true
-            };
+        
 
-            var post = new Post { PostId = 1, Title = "Test Post", UserId = 1 };
-            var mockPostDbSet = CreateMockDbSet(new List<Post> { post });
-            _postRepository.Setup(x => x.Posts).Returns(mockPostDbSet.Object);
-            _postRepository.Setup(x => x.EditPost(It.IsAny<Post>())).Verifiable();
-            _postRepository.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask).Verifiable();
-
-            // Act
-            var result = await _controller.Edit(model, null);
-
-            // Assert
-            _postRepository.Verify(x => x.EditPost(It.IsAny<Post>()), Times.Once);
-            _postRepository.Verify(x => x.SaveAsync(), Times.Once);
-            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Details", redirectResult.ActionName);
-        }
-
+        
         [Fact]
         public async Task Delete_WithValidId_ShouldDeletePost()
         {

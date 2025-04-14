@@ -71,7 +71,7 @@ namespace BlogApp.Controllers
                 .Include(x => x.Comments).ThenInclude(x => x.User)
                 .Include(x => x.User) 
                 .FirstOrDefaultAsync(p => p.Url == url);
-            //boş resimli post gönderiliyor onu düzelt
+           
             return View(post);
         }
         [HttpGet("/Post/Edit/{url}")]
@@ -114,7 +114,6 @@ namespace BlogApp.Controllers
 
             return View("~/Views/Post/Edit.cshtml", postEditViewModel);
         }
-
         [HttpPost]
         public async Task<IActionResult> Edit(PostEditViewModel model, IFormFile? image)
         {
@@ -125,6 +124,24 @@ namespace BlogApp.Controllers
 
             if (ModelState.IsValid)
             {
+                if (await _postRepository.PostTitleExistsAsync(model.Title))
+                {
+                    ModelState.AddModelError("Title", "Bu başlığa sahip bir yazı zaten mevcut.");
+                    return View(model);
+                }
+
+                var tagNames = model.TagsInput
+                    .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(t => t.Trim())
+                    .Distinct()
+                    .ToList();
+
+                if (tagNames.Count == 0)
+                {
+                    ModelState.AddModelError("TagsInput", "Lütfen en az bir geçerli etiket giriniz.");
+                    return View(model);
+                }
+
                 var post = await _postRepository.Posts
                     .Include(p => p.Tags)
                     .FirstOrDefaultAsync(p => p.PostId == model.PostId);
@@ -158,31 +175,24 @@ namespace BlogApp.Controllers
                     post.Image = randomFileName;
                 }
 
-                if (!string.IsNullOrEmpty(model.TagsInput))
+                // Tag'leri güncelle
+                post.Tags.Clear();
+
+                foreach (var tagName in tagNames)
                 {
-                    post.Tags.Clear();
+                    var tag = await _postRepository.GetTagByTextAsync(tagName);
 
-                    var tagNames = model.TagsInput
-                        .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
-                        .Select(t => t.Trim())
-                        .Distinct();
-
-                    foreach (var tagName in tagNames)
+                    if (tag == null)
                     {
-                        var tag = await _postRepository.GetTagByTextAsync(tagName);
-
-                        if (tag == null)
+                        tag = new Tag
                         {
-                            tag = new Tag
-                            {
-                                Text = tagName,
-                                Url = tagName.ToLower().Replace(" ", "-")
-                            };
-                            await _postRepository.AddTagAsync(tag);
-                        }
-
-                        post.Tags.Add(tag);
+                            Text = tagName,
+                            Url = tagName.ToLower().Replace(" ", "-")
+                        };
+                        await _postRepository.AddTagAsync(tag);
                     }
+
+                    post.Tags.Add(tag);
                 }
 
                 _postRepository.EditPost(post);
@@ -193,6 +203,7 @@ namespace BlogApp.Controllers
 
             return View(model);
         }
+
 
         [HttpPost]
         [Route("/Post/Delete/{postId}")]
@@ -257,6 +268,11 @@ namespace BlogApp.Controllers
 
             if (ModelState.IsValid)
             {
+                if (await _postRepository.PostTitleExistsAsync(model.Title))
+                {
+                    ModelState.AddModelError("Title", "Bu başlığa sahip bir yazı zaten mevcut.");
+                    return View(model);
+                }
                 var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var post = new Post
                 {
@@ -291,10 +307,13 @@ namespace BlogApp.Controllers
 
                 if (!string.IsNullOrEmpty(model.TagsInput))
                 {
-                    var tagNames = model.TagsInput
-                        .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
-                        .Select(t => t.Trim())
-                        .Distinct();
+                    var tagNames = model.GetParsedTags();
+
+                    if (tagNames.Count == 0)
+                    {
+                        ModelState.AddModelError("TagsInput", "Lütfen en az bir geçerli etiket giriniz.");
+                        return View(model);
+                    }
 
                     foreach (var tagName in tagNames)
                     {

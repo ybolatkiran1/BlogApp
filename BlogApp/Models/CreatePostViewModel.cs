@@ -31,5 +31,16 @@ namespace BlogApp.Models
 
         [Display(Name = "Etiketler")]
         public string TagsInput { get; set; } = string.Empty;
+
+        public List<string> GetParsedTags()
+        {
+            return TagsInput
+                .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
     }
+
 } 
