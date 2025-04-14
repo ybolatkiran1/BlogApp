@@ -59,7 +59,8 @@
             <form id="commentForm" class="comment-form mb-4">
                 <input type="hidden" id="PostId" value="@Model.PostId" />
                 <div class="mb-3">
-                    <textarea class="form-control" id="Text" rows="3" placeholder="Yorumunuzu yazın..."></textarea>
+                    <textarea class="form-control" id="Text" rows="3" placeholder="Yorumunuzu yazın... (Maksimum 300 karakter)" maxlength="300"></textarea>
+                    <small class="text-muted float-end"><span id="charCount">0</span>/300</small>
                 </div>
                 <button type="button" id="btnYorumKayit" class="btn btn-primary">Yorum Yap</button>
             </form>
@@ -73,7 +74,7 @@
 
         <!-- Yorumlar Listesi -->
         <div id="comments">
-            @foreach (var comment in Model.Comments.OrderByDescending(c => c.PublishedOn))
+            @foreach (var comment in Model.Comments.OrderByDescending(c => c.PublishedOn).Take(5))
             {
                 <div class="comment">
                     <img src="~/img/users/@(comment.User?.Image ?? "default.jpg")" class="comment-avatar" alt="@comment.User?.UserName">
@@ -87,17 +88,66 @@
                 </div>
             }
         </div>
+
+        <!-- Sayfalama -->
+        <div id="pagination" class="mt-4 text-center">
+            <nav aria-label="Yorum sayfaları">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled" id="prevPage">
+                        <a class="page-link" href="#" tabindex="-1">Önceki</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#" data-page="1">1</a></li>
+                    <li class="page-item" id="nextPage">
+                        <a class="page-link" href="#">Sonraki</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript">
+        var currentPage = 1;
+        var totalPages = @Math.Ceiling(Model.Comments.Count / 5.0);
+
         $(document).ready(function () {
+            // Karakter sayacı
+            $('#Text').on('input', function() {
+                var currentLength = $(this).val().length;
+                $('#charCount').text(currentLength);
+                
+                // Karakter limiti aşıldığında uyarı göster
+                if (currentLength > 300) {
+                    $('#charCount').addClass('text-danger');
+                } else {
+                    $('#charCount').removeClass('text-danger');
+                }
+            });
+
+            // Sayfalama kontrollerini güncelle
+            updatePagination();
+
+            // Sayfa değişikliği
+            $(document).on('click', '.page-link', function(e) {
+                e.preventDefault();
+                var page = $(this).data('page');
+                if (page) {
+                    loadComments(page);
+                }
+            });
+
+            // Yorum ekleme
             $("#btnYorumKayit").click(function () {
                 var text = $("#Text").val().trim();
                 if (!text) {
                     alert("Lütfen bir yorum yazın.");
+                    return false;
+                }
+
+                if (text.length > 300) {
+                    alert("Yorumunuz 300 karakterden uzun olamaz.");
                     return false;
                 }
 
@@ -129,9 +179,13 @@
                             `);
 
                             $("#Text").val('');
-
+                            $('#charCount').text('0');
                             var adet = parseInt($("#commentCount").text());
                             $("#commentCount").text(adet + 1);
+                            
+                            // Yeni yorum eklendiğinde sayfa sayısını güncelle
+                            totalPages = Math.ceil((adet + 1) / 5);
+                            updatePagination();
                         } else {
                             alert(response.message);
                         }
@@ -143,6 +197,78 @@
                 return false;
             });
         });
+
+        function loadComments(page) {
+            currentPage = page;
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetComments", "Comment")',
+                data: {
+                    postId: $('#PostId').val(),
+                    page: page,
+                    pageSize: 5
+                },
+                success: function(response) {
+                    $("#comments").empty();
+                    response.comments.forEach(function(comment) {
+                        var date = new Date(comment.publishedOn);
+                        var avatarPath = comment.avatar ? `/img/users/${comment.avatar}` : '/img/users/default.jpg';
+                        
+                        $("#comments").append(`
+                            <div class="comment">
+                                <img src="${avatarPath}" class="comment-avatar" alt="${comment.username}">
+                                <div class="comment-body">
+                                    <div class="comment-header">
+                                        <span class="comment-name">${comment.username}</span>
+                                        <span class="comment-date">${date.toLocaleDateString()}</span>
+                                    </div>
+                                    <p class="comment-text">${comment.text}</p>
+                                </div>
+                            </div>
+                        `);
+                    });
+
+                    totalPages = response.totalPages;
+                    updatePagination();
+                },
+                error: function(xhr, status, error) {
+                    alert("Yorumlar yüklenirken bir hata oluştu: " + error);
+                }
+            });
+        }
+
+        function updatePagination() {
+            var paginationHtml = '';
+            
+            // Önceki sayfa butonu (sadece ilk sayfada değilken göster)
+            if (currentPage > 1) {
+                paginationHtml += `
+                    <li class="page-item">
+                        <a class="page-link" href="#" data-page="${currentPage - 1}">Önceki</a>
+                    </li>
+                `;
+            }
+
+            // Sayfa numaraları
+            for (var i = 1; i <= totalPages; i++) {
+                paginationHtml += `
+                    <li class="page-item ${currentPage === i ? 'active' : ''}">
+                        <a class="page-link" href="#" data-page="${i}">${i}</a>
+                    </li>
+                `;
+            }
+
+            // Sonraki sayfa butonu (sadece son sayfada değilken göster)
+            if (currentPage < totalPages) {
+                paginationHtml += `
+                    <li class="page-item">
+                        <a class="page-link" href="#" data-page="${currentPage + 1}">Sonraki</a>
+                    </li>
+                `;
+            }
+
+            $(".pagination").html(paginationHtml);
+        }
     </script>
 }
 
@@ -246,6 +372,43 @@
             border-color: var(--accent);
             box-shadow: 0 0 0 0.2rem rgba(var(--accent-rgb), 0.25);
             color: var(--text-primary);
+        }
+
+        /* Sayfalama stilleri */
+        .pagination {
+            margin-top: 20px;
+        }
+
+        .page-link {
+            background-color: var(--dark-tertiary);
+            border-color: var(--dark-secondary);
+            color: var(--text-primary);
+        }
+
+        .page-link:hover {
+            background-color: var(--dark-secondary);
+            border-color: var(--dark-secondary);
+            color: var(--text-primary);
+        }
+
+        .page-item.active .page-link {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .page-item.disabled .page-link {
+            background-color: var(--dark-tertiary);
+            border-color: var(--dark-secondary);
+            color: var(--text-secondary);
+        }
+
+        /* Karakter sayacı stilleri */
+        .text-muted {
+            font-size: 0.875rem;
+        }
+
+        .text-danger {
+            font-weight: bold;
         }
     </style>
 }

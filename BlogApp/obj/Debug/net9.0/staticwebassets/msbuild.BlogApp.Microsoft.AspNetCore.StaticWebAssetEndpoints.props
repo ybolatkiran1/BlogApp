@@ -268,13 +268,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-qp0AfF1nlVsin/4ZoAHV7K23pw6L3nPsW8aI3tC3yk4="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"9752"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022qp0AfF1nlVsin/4ZoAHV7K23pw6L3nPsW8aI3tC3yk4=\u0022"},{"Name":"Last-Modified","Value":"Mon, 14 Apr 2025 17:14:17 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"9752"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022qp0AfF1nlVsin/4ZoAHV7K23pw6L3nPsW8aI3tC3yk4=\u0022"},{"Name":"Last-Modified","Value":"Mon, 14 Apr 2025 19:35:14 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BlogApp/js/site.uv7n29ln98.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"uv7n29ln98"},{"Name":"integrity","Value":"sha256-qp0AfF1nlVsin/4ZoAHV7K23pw6L3nPsW8aI3tC3yk4="},{"Name":"label","Value":"_content/BlogApp/js/site.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"9752"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022qp0AfF1nlVsin/4ZoAHV7K23pw6L3nPsW8aI3tC3yk4=\u0022"},{"Name":"Last-Modified","Value":"Mon, 14 Apr 2025 17:14:17 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"9752"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022qp0AfF1nlVsin/4ZoAHV7K23pw6L3nPsW8aI3tC3yk4=\u0022"},{"Name":"Last-Modified","Value":"Mon, 14 Apr 2025 19:35:14 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BlogApp/lib/bootstrap-icons/bootstrap-icons.c9r8armtal.svg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap-icons\bootstrap-icons.svg'))</AssetFile>

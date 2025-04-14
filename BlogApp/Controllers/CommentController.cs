@@ -27,6 +27,12 @@ namespace BlogApp.Controllers
                 return Json(new { success = false, message = "Yorum yapabilmek için giriş yapmalısınız." });
             }
 
+            // Yorum uzunluğu kontrolü
+            if (Text.Length > 300)
+            {
+                return Json(new { success = false, message = "Yorumunuz 300 karakterden uzun olamaz." });
+            }
+
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "0");
             var user = await _userRepository.Users.FirstOrDefaultAsync(u => u.UserId == userId);
 
@@ -60,45 +66,35 @@ namespace BlogApp.Controllers
             });
         }
 
-        public async Task<IActionResult> GetComments(int postId, int page = 1)
+        [HttpGet]
+        public IActionResult GetComments(int postId, int page = 1, int pageSize = 5)
         {
-            try
-            {
-                const int pageSize = 5;
-                var comments = await _commentRepository.Comments
-                    .Include(c => c.User)
-                    .Where(c => c.PostId == postId)
-                    .OrderByDescending(c => c.PublishedOn)
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToListAsync();
-
-                var totalComments = await _commentRepository.Comments
-                    .Where(c => c.PostId == postId)
-                    .CountAsync();
-
-                var totalPages = (int)Math.Ceiling(totalComments / (double)pageSize);
-
-                var commentViewModels = comments.Select(c => new
+            var comments = _commentRepository.Comments
+                .Include(c => c.User)
+                .Where(c => c.PostId == postId)
+                .OrderByDescending(c => c.PublishedOn)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(c => new
                 {
-                    text = c.Text,
-                    publishedOn = c.PublishedOn,
-                    username = c.User?.UserName ?? "Anonim",
-                    avatar = c.User?.Image ?? "default.jpg"
-                }).ToList();
+                    c.CommentId,
+                    c.Text,
+                    c.PublishedOn,
+                    username = c.User.UserName,
+                    avatar = c.User.Image
+                })
+                .ToList();
 
-                return Json(new
-                {
-                    success = true,
-                    comments = commentViewModels,
-                    currentPage = page,
-                    totalPages = totalPages
-                });
-            }
-            catch (Exception ex)
+            var totalComments = _commentRepository.Comments.Count(c => c.PostId == postId);
+            var totalPages = (int)Math.Ceiling(totalComments / (double)pageSize);
+
+            return Json(new
             {
-                return Json(new { success = false, message = "Yorumlar yüklenirken bir hata oluştu: " + ex.Message });
-            }
+                comments = comments,
+                currentPage = page,
+                totalPages = totalPages,
+                totalComments = totalComments
+            });
         }
 
         [HttpPost]
