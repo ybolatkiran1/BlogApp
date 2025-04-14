@@ -1,0 +1,112 @@
+@model CreatePostViewModel
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Yeni Yazı Oluştur</h2>
+                    <form asp-action="Create" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">Başlık</label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Url" class="form-label">URL</label>
+                            <input asp-for="Url" class="form-control" />
+                            <span asp-validation-for="Url" class="text-danger"></span>
+                            <small class="form-text text-secondary">URL benzersiz olmalıdır ve sadece küçük harfler, rakamlar ve tire işareti içermelidir.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Açıklama</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" data-maxlength="150"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <div class="text-danger small mt-1" id="descriptionLimitWarning" style="display: none;">
+                                Açıklama alanı en fazla 150 harf olabilir.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Content" class="form-label">İçerik</label>
+                            <textarea asp-for="Content" class="form-control" rows="10" id="editor"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Image" class="form-label">Resim</label>
+                            <input asp-for="Image" class="form-control" type="file" accept="image/*" />
+                            <small class="form-text text-secondary">Yazı için bir resim yükleyin.</small>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input asp-for="IsActive" class="form-check-input" />
+                            <label asp-for="IsActive" class="form-check-label">Aktif</label>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="TagsInput" class="form-label">Etiketler</label>
+                            <input asp-for="TagsInput" class="form-control" id="tagsInput" />
+                            <small class="form-text text-secondary">Etiketleri virgülle ayırarak giriniz</small>
+                            <div id="tagsList" class="mt-2"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Oluştur</button>
+                            <a asp-action="Index" class="btn btn-outline-light">İptal</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+    <script>
+        $(document).ready(function() {
+            // Açıklama alanı karakter sınırı kontrolü
+            $('#Description').on('input', function() {
+                const warningDiv = $('#descriptionLimitWarning');
+                if ($(this).val().length === 150) {
+                    warningDiv.show();
+                } else {
+                    warningDiv.hide();
+                }
+            });
+        });
+    </script>
+}
+
+@section Styles {
+    <style>
+        /* CKEditor özel stil */
+        .ck-editor__editable {
+            min-height: 300px;
+            color: var(--text-primary) !important;
+            background-color: var(--dark-tertiary) !important;
+        }
+
+        .ck.ck-editor__main > .ck-editor__editable {
+            background-color: var(--dark-tertiary) !important;
+            color: var(--text-primary) !important;
+        }
+
+            .ck.ck-editor__main > .ck-editor__editable:focus {
+                border-color: var(--accent) !important;
+            }
+
+        .ck.ck-toolbar {
+            background-color: var(--dark-secondary) !important;
+            border-color: var(--dark-tertiary) !important;
+        }
+
+        .ck.ck-button {
+            color: var(--text-secondary) !important;
+        }
+
+            .ck.ck-button.ck-on {
+                color: var(--accent) !important;
+                background-color: var(--dark-tertiary) !important;
+            }
+    </style>
+}

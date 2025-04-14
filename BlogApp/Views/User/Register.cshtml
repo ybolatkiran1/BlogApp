@@ -1,0 +1,50 @@
+﻿@model RegisterViewModel
+<head>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <div class="login-icon">
+                <i class="fas fa-user-circle"></i>
+            </div>
+
+            <h1>Kayıt Ol!</h1>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <form action="Register" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">İsim</label>
+                            <input asp-for="Name" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Username" class="form-label">Kullanıcı Adı</label>
+                            <input asp-for="Username" class="form-control">
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Mail</label>
+                            <input asp-for="Email" class="form-control">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Şifre</label>
+                            <input asp-for="Password" class="form-control">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label">Şifreyi Onayla</label>
+                            <input asp-for="ConfirmPassword" class="form-control">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Kayıt Ol</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

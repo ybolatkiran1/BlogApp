@@ -1,0 +1,127 @@
+﻿@using BlogApp.Entity;
+@model UserProfileViewModel
+@{
+    ViewData["Title"] = "Profil";
+    var isProfileOwner = User.Identity?.Name == Model.UserName;
+}
+<script src="~/js/site.js"></script>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="~/img/users/@(Model.Image ?? "default.jpg")" class="rounded-circle mb-3 profile-image" style="width: 150px; height: 150px;" alt="Profil Resmi">
+                    <h4 class="card-title">@Model.UserName</h4>
+                    <p class="text-secondary">@Model.Name</p>
+                    @if (isProfileOwner)
+                    {
+                        <a href="/Post/Create" class="btn btn-primary mb-3">
+                            <i class="bi bi-plus-circle"></i> Yeni Yazı Ekle
+                        </a>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="/User/EditProfile" class="btn btn-outline-light">
+                                <i class="bi bi-pencil"></i> Profili Düzenle
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="profile-tabs">
+                <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button" role="tab" aria-controls="posts" aria-selected="true" text-white>
+                            Yayınlanan Yazılar (@Model.TotalPostCount)
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="profileTabsContent">
+                    <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                        <div class="row mt-4">
+                            @foreach (var post in Model.Posts.OrderByDescending(p => p.PublishedOn).Take(4))
+                            {
+                                <div class="col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        <a href="/blogs/@post.Url" class="text-decoration-none">
+                                            <img src="~/img/post/@post.Image" class="card-img-top" alt="@post.Title">
+                                        </a>
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <span class="category-badge @(post.IsActive ? "bg-primary" : "bg-secondary")">
+                                                    <i class="bi @(post.IsActive ? "bi-check-circle" : "bi-x-circle")"></i>
+                                                    @(post.IsActive ? "Yayında" : "Yayında Değil")
+                                                </span>
+                                            </div>
+                                            <a href="/blogs/@post.Url" class="text-decoration-none">
+                                                <h5 class="card-title text-white">@post.Title</h5>
+                                            </a>
+                                            <p class="card-text">@post.Description</p>
+                                            <div class="post-meta d-flex justify-content-between align-items-center">
+                                                <span><i class="bi bi-chat"></i> @(post.Comments?.Count() ?? 0) yorum</span>
+                                                <span><i class="bi bi-calendar"></i> @post.PublishedOn.ToString("dd.MM.yyyy HH:mm")</span>
+                                                @if (isProfileOwner)
+                                                {
+                                                    <div>
+                                                        <a href="/Post/Edit/@post.Url" class="btn btn-sm btn-outline-light">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </a>
+                                                        <form asp-action="ToggleStatus" asp-controller="Post" asp-route-postId="@post.PostId" method="post" class="d-inline">
+                                                            <button type="submit" class="btn btn-sm @(post.IsActive ? "btn-outline-warning" : "btn-outline-success")" title="@(post.IsActive ? "Yayından Kaldır" : "Yayına Al")">
+                                                                <i class="bi @(post.IsActive ? "bi-eye-slash" : "bi-eye")"></i>
+                                                            </button>
+                                                        </form>
+                                                        <form asp-action="Delete" asp-controller="Post" asp-route-id="@post.PostId" method="post" class="d-inline">
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bu yazıyı silmek istediğinizden emin misiniz?')">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Model.TotalPages > 1)
+                        {
+                            <nav aria-label="Page navigation" class="mt-4">
+                                <ul class="pagination justify-content-center">
+                                    @if (Model.CurrentPage > 1)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=@(Model.CurrentPage - 1)" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @for (int i = 1; i <= Model.TotalPages; i++)
+                                    {
+                                        <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                            <a class="page-link" href="?page=@i">@i</a>
+                                        </li>
+                                    }
+
+                                    @if (Model.CurrentPage < Model.TotalPages)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=@(Model.CurrentPage + 1)" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+   

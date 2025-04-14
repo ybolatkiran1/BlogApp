@@ -1,0 +1,251 @@
+﻿@using BlogApp.Entity
+@model Post
+
+<div class="container py-5">
+    <article class="blog-post">
+        <!-- Başlık Alanı -->
+        <div class="post-header text-center mb-4">
+            <h1 class="post-title">@Model.Title</h1>
+            <div class="post-meta">
+                <span><i class="far fa-calendar"></i> @Model.PublishedOn.ToString("dd.MM.yyyy HH:mm")</span>
+            </div>
+        </div>
+
+        <!-- Resim Alanı (Merkeze Hizalı) -->
+        <div class="text-center mb-5">
+            <img src="~/img/post/@Model.Image" class="post-featured-image img-fluid" alt="@Model.Title">
+        </div>
+
+        <!-- İçerik Alanı -->
+        <div class="post-content">
+            @Html.Raw(Model.Content)
+        </div>
+
+        <!-- Etiketler -->
+        <div class="post-tags mt-5 text-center">
+            @foreach (var tag in Model.Tags)
+            {
+                <a href="/Post/Index?tag=@tag.Url" class="post-tag">@tag.Text</a>
+            }
+        </div>
+    </article>
+
+    <!-- Yazar Bilgileri -->
+    <div class="author-info mb-5" style="max-width: 800px; margin: 0 auto;">
+        <h3 class="mb-3" style="font-weight: 600; padding-bottom: 15px; border-bottom: 1px solid var(--dark-tertiary);">Yazar</h3>
+        <div class="d-flex align-items-center gap-3 p-4 rounded" style="background-color: var(--dark-tertiary);">
+            <a href="/Profile/@Model.User.UserName" class="text-decoration-none">
+                <img src="~/img/users/@(Model.User.Image ?? "default.jpg")" 
+                     class="rounded-circle" 
+                     style="width: 80px; height: 80px; object-fit: cover;" 
+                     alt="@Model.User.UserName">
+            </a>
+            <div>
+                <a href="/Profile/@Model.User.UserName" class="text-decoration-none">
+                    <h5 class="mb-1 text-white">@Model.User.Name</h5>
+                </a>
+                <p class="mb-0 text-secondary">@Model.User.UserName</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Yorumlar Bölümü -->
+    <div class="comments-section mt-5">
+        <h3 class="mb-4">Yorumlar <span id="commentCount">@Model.Comments.Count</span></h3>
+
+        <!-- Yorum Formu -->
+        @if (User.Identity!.IsAuthenticated)
+        {
+            <form id="commentForm" class="comment-form mb-4">
+                <input type="hidden" id="PostId" value="@Model.PostId" />
+                <div class="mb-3">
+                    <textarea class="form-control" id="Text" rows="3" placeholder="Yorumunuzu yazın..."></textarea>
+                </div>
+                <button type="button" id="btnYorumKayit" class="btn btn-primary">Yorum Yap</button>
+            </form>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                Yorum yapabilmek için <a href="/User/Login">giriş yapın</a>.
+            </div>
+        }
+
+        <!-- Yorumlar Listesi -->
+        <div id="comments">
+            @foreach (var comment in Model.Comments.OrderByDescending(c => c.PublishedOn))
+            {
+                <div class="comment">
+                    <img src="~/img/users/@(comment.User?.Image ?? "default.jpg")" class="comment-avatar" alt="@comment.User?.UserName">
+                    <div class="comment-body">
+                        <div class="comment-header">
+                            <span class="comment-name">@comment.User?.UserName</span>
+                            <span class="comment-date">@comment.PublishedOn.ToString("dd.MM.yyyy")</span>
+                        </div>
+                        <p class="comment-text">@comment.Text</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnYorumKayit").click(function () {
+                var text = $("#Text").val().trim();
+                if (!text) {
+                    alert("Lütfen bir yorum yazın.");
+                    return false;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddComment", "Comment")',
+                    dataType: 'json',
+                    data: {
+                        PostId: $('#PostId').val(),
+                        Text: text
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            var comment = response.comment;
+                            var date = new Date(comment.publishedOn);
+                            var avatarPath = comment.avatar ? `/img/users/${comment.avatar}` : '/img/users/default.jpg';
+
+                            $("#comments").prepend(`
+                                <div class="comment">
+                                    <img src="${avatarPath}" class="comment-avatar" alt="${comment.username}">
+                                    <div class="comment-body">
+                                        <div class="comment-header">
+                                            <span class="comment-name">${comment.username}</span>
+                                            <span class="comment-date">${date.toLocaleDateString()}</span>
+                                        </div>
+                                        <p class="comment-text">${comment.text}</p>
+                                    </div>
+                                </div>
+                            `);
+
+                            $("#Text").val('');
+
+                            var adet = parseInt($("#commentCount").text());
+                            $("#commentCount").text(adet + 1);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Yorum eklenirken bir hata oluştu: " + error);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/style.css" />
+    <style>
+        /* Blog post özel stilleri */
+        .blog-post {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            padding-bottom: .0px;
+            border-bottom: 1px solid var(--dark-tertiary);
+        }
+
+        .post-header {
+            margin-bottom: 30px;
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .post-featured-image {
+            max-height: 500px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .comments-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Mevcut dark temanın yorumlar ve diğer öğeleri doğru şekilde görüntülemesi için */
+        .comments-section h3 {
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--dark-tertiary);
+        }
+
+        /* Yorum stilleri */
+        .comment {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: var(--dark-tertiary);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .comment-body {
+            flex: 1;
+            min-width: 0; /* Flexbox içinde taşmayı önler */
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .comment-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .comment-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .comment-text {
+            margin: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            max-width: 100%;
+            line-height: 1.5;
+        }
+
+        /* Yorum form stilleri */
+        .comment-form textarea {
+            background-color: var(--dark-tertiary);
+            border: 1px solid var(--dark-secondary);
+            color: var(--text-primary);
+            resize: vertical;
+        }
+
+        .comment-form textarea:focus {
+            background-color: var(--dark-tertiary);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.2rem rgba(var(--accent-rgb), 0.25);
+            color: var(--text-primary);
+        }
+    </style>
+}

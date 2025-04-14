@@ -1,0 +1,286 @@
+﻿@model PostEditViewModel
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Yazı Düzenle</h2>
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="PostId" />
+                        <input type="hidden" asp-for="Image" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">Başlık</label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Url" class="form-label">URL</label>
+                            <input asp-for="Url" class="form-control" />
+                            <span asp-validation-for="Url" class="text-danger"></span>
+                            <small class="form-text text-secondary">URL benzersiz olmalıdır ve sadece küçük harfler, rakamlar ve tire işareti içermelidir.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Açıklama</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" data-maxlength="150"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <div class="text-danger small mt-1" id="descriptionLimitWarning" style="display: none;">
+                                Açıklama alanı en fazla 150 harf olabilir.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Content" class="form-label">İçerik</label>
+                            <textarea asp-for="Content" class="form-control" rows="10" id="editor"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mevcut Resim</label>
+                            @if (!string.IsNullOrEmpty(Model.Image))
+                            {
+                                <div class="mb-2">
+                                    <img src="/img/post/@Model.Image" alt="Post Image" style="max-width: 200px; max-height: 200px;" class="img-thumbnail" />
+                                </div>
+                            }
+                            <label for="image" class="form-label">Yeni Resim Yükle</label>
+                            <input type="file" name="image" id="image" class="form-control" accept="image/*" />
+                            <small class="form-text text-secondary">Yeni bir resim yüklemezseniz, mevcut resim kullanılacaktır.</small>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input asp-for="IsActive" class="form-check-input" />
+                            <label asp-for="IsActive" class="form-check-label">Aktif</label>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="TagsInput" class="form-label">Etiketler</label>
+                            <input asp-for="TagsInput" class="form-control" id="tagsInput" />
+                            <small class="form-text text-secondary">Etiketleri virgülle ayırarak giriniz</small>
+                            <div id="tagsList" class="mt-2"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                            <div>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    <i class="fas fa-trash"></i> Sil
+                                </button>
+                                <a asp-action="Details" asp-route-url="@Model.Url" class="btn btn-outline-light">İptal</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Yorumlar Bölümü -->
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card bg-dark border-0">
+                <div class="card-body">
+                    <h3 class="card-title mb-4 text-white">Yorumlar</h3>
+                    @if (Model.Comments.Any())
+                    {
+                        <div class="comments-list">
+                            @foreach (var comment in Model.Comments.OrderByDescending(c => c.PublishedOn))
+                            {
+                                <div class="comment mb-3 p-3 rounded" style="background-color: var(--dark-tertiary);" id="comment-@comment.CommentId">
+                                    <div class="d-flex justify-content-between align-items-start w-100 mb-2">
+                                        <div class="d-flex flex-column">
+                                            <div class="user-avatar me-2 d-flex flex-column gap-1">
+                                                <i class="bi bi-user-circle bi-2x text-accent d-inline-block"></i>
+                                                <div class="d-flex gap-3 align-items-center">
+                                                    <strong class="text-white">@comment.User?.UserName</strong>
+                                                    <small class="text-sm-start text-muted">@comment.PublishedOn.ToString("dd.MM.yyyy HH:mm")</small>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="comment-content">
+                                                <p class="mb-0 text-white">@comment.Text</p>
+                                            </div>
+                                        </div>
+                                       
+                                        <button type="button" class="btn btn-sm btn-danger delete-comment ms-3"
+                                                data-comment-id="@comment.CommentId" data-post-id="@Model.PostId">
+                                            <i class="fas fa-trash me-1"></i> Sil
+                                        </button>
+                                    </div>
+                                    
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-comments fa-3x text-white-50 mb-3"></i>
+                            <p class="text-white-50 mb-0">Henüz yorum yapılmamış.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Yazıyı Sil</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bu yazıyı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                <form asp-controller="Post" asp-action="Delete" asp-route-postId="@Model.PostId" method="post">
+                    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+    <script>
+        $(document).ready(function() {
+            let commentToDelete = null;
+            let postIdToDelete = null;
+
+            // Yorum silme modal'ını göster
+            $('.delete-comment').click(function(e) {
+                e.preventDefault();
+                commentToDelete = $(this).data('comment-id');
+                postIdToDelete = $(this).data('post-id');
+                $('#deleteCommentModal').modal('show');
+            });
+
+            // Yorum silme onayı
+            $('#confirmDeleteComment').click(function() {
+                if (!commentToDelete) return;
+
+                $.ajax({
+                    url: '/Comment/Delete',
+                    type: 'POST',
+                    data: {
+                        commentId: commentToDelete,
+                        postId: postIdToDelete
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#comment-' + commentToDelete).fadeOut(300, function() {
+                                $(this).remove();
+                                // Eğer son yorum silindiyse "henüz yorum yapılmamış" mesajını göster
+                                if ($('.comments-list .comment').length === 0) {
+                                    $('.comments-list').html(`
+                                        <div class="text-center py-4">
+                                            <i class="fas fa-comments fa-3x text-white-50 mb-3"></i>
+                                            <p class="text-white-50 mb-0">Henüz yorum yapılmamış.</p>
+                                        </div>
+                                    `);
+                                }
+                            });
+                            $('#deleteCommentModal').modal('hide');
+                        } else {
+                            alert('Yorum silinirken bir hata oluştu: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Yorum silinirken bir hata oluştu.');
+                    }
+                });
+            });
+
+            // Açıklama alanı karakter sınırı kontrolü
+            $('#Description').on('input', function() {
+                const warningDiv = $('#descriptionLimitWarning');
+                if ($(this).val().length === 150) {
+                    warningDiv.show();
+                } else {
+                    warningDiv.hide();
+                }
+            });
+        });
+    </script>
+}
+
+@section Styles {
+    <style>
+        /* CKEditor özel stil */
+        .ck-editor__editable {
+            min-height: 300px;
+            color: var(--text-primary) !important;
+            background-color: var(--dark-tertiary) !important;
+        }
+
+        .ck.ck-editor__main > .ck-editor__editable {
+            background-color: var(--dark-tertiary) !important;
+            color: var(--text-primary) !important;
+        }
+
+        .ck.ck-editor__main > .ck-editor__editable:focus {
+            border-color: var(--accent) !important;
+        }
+
+        .ck.ck-toolbar {
+            background-color: var(--dark-secondary) !important;
+            border-color: var(--dark-tertiary) !important;
+        }
+
+        .ck.ck-button {
+            color: var(--text-secondary) !important;
+        }
+
+        .ck.ck-button.ck-on {
+            color: var(--accent) !important;
+            background-color: var(--dark-tertiary) !important;
+        }
+
+        /* Yorum stilleri */
+        .comment {
+            max-width: 100%;
+            position: relative;
+        }
+
+        .comment-content {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .comment-content p {
+            margin: 0;
+            max-height: 100px;
+            overflow-y: auto;
+            word-break: break-word;
+            white-space: pre-wrap;
+            padding-right: 10px;
+        }
+
+        /* Kaydırma çubuğu stilleri */
+        .comment-content p::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .comment-content p::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .comment-content p::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .comment-content p::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+    </style>
+}

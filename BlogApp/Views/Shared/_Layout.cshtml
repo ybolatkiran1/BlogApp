@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <title>Document</title>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/post/index">MiniBlog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"> 
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Post" asp-action="Index">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="User" asp-action="Authors">Yazarlarımız</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a href="/profile/@User.Identity.Name" class="nav-link">Hesabım</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="/user/logout" class="nav-link">Çıkış</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a href="/user/login" class="nav-link">Giriş Yap</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/user/register" class="nav-link">Kayıt Ol</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    @RenderBody()
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="footer-heading">MiniBlog</h5>
+                    <a href="/post/index" class="footer-link">Bloglar</a>
+                </div>
+               
+                    
+                    
+             
+            <div class="text-center copyright w-100">
+                <p>&copy; 2025 MiniBlog. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    
+    <script src="~/js/site.js"></script>
+</body>
+@await RenderSectionAsync("Scripts", required: false)
+
+</html>

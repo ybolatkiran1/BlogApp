@@ -1,0 +1,124 @@
+﻿@model BlogApp.Models.EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Profil Düzenle";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="profile-menu">
+                <h5 class="mb-4">Profil Ayarları</h5>
+                <a href="#" class="profile-menu-item active">
+                    <i class="bi bi-user-edit"></i> Profil Bilgileri
+                </a>
+               
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h4 style="color:white">Profil Düzenle</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-3 text-center">
+                                @if (!string.IsNullOrEmpty(Model.Image))
+                                {
+                                    <img src="~/img/users/@Model.Image" class="img-fluid rounded-circle profile-image mb-3" alt="Profil Resmi" style="width: 150px; height: 150px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <img src="~/img/users/default.jpg" class="img-fluid rounded-circle profile-image mb-3" alt="Varsayılan Profil Resmi" style="width: 150px; height: 150px; object-fit: cover;">
+                                }
+                                <div class="mt-2">
+                                    <label for="imageFile" class="btn btn-outline-light btn-sm">
+                                        <i class="fas fa-camera"></i> Resim Değiştir
+                                    </label>
+                                    <input type="file" id="imageFile" name="imageFile" class="d-none" accept="image/*">
+                                    <p class="small text-secondary mt-2">PNG, JPG veya GIF (Max. 2MB)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="mb-3" >
+                                    <label asp-for="Name" class="form-label" style="color:white"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="UserName" class="form-label" style="color:white"></label>
+                                    <input asp-for="UserName" class="form-control" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Email" class="form-label" style="color:white"></label>
+                                    <input asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h5 style="color:white">Şifre Değiştir</h5>
+                        <p class="text-secondary small mb-3">Şifrenizi değiştirmek istemiyorsanız bu alanları boş bırakabilirsiniz.</p>
+
+                        <div class="mb-3">
+                            <label asp-for="CurrentPassword" class="form-label" style="color:white"></label>
+                            <input asp-for="CurrentPassword" class="form-control" />
+                            <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="NewPassword" class="form-label" style="color:white"></label>
+                            <input asp-for="NewPassword" class="form-control" />
+                            <span asp-validation-for="NewPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label" style="color:white"></label>
+                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-danger" onclick="deleteProfile()">
+                                <i class="bi bi-trash"></i> Hesabı Sil
+                            </button>
+                            <div>
+                                <a asp-action="Profile" asp-route-username="@User.Identity!.Name" class="btn btn-outline-light me-2">
+                                    <i class="bi bi-x-circle"></i> İptal
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Değişiklikleri Kaydet
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function deleteProfile() {
+            if (confirm('Hesabınızı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz ve tüm yazılarınız ve yorumlarınız silinecektir.')) {
+                // Form oluştur ve gönder
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '@Url.Action("DeleteProfile", "User")';
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        
+        });
+    </script>
+}

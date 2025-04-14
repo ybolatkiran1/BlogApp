@@ -1,0 +1,40 @@
+﻿@model LoginViewModel
+<head>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <div class="login-icon">
+                <i class="fas fa-user-circle"></i>
+            </div>
+
+            <h1>Giriş Yap</h1>
+
+            
+            <div class="row">
+                <div class="col-12">
+                    <form action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Email adresinizi girin">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Şifre</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Şifrenizi girin">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Giriş Yap</button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p>Hesabınız yok mu? <a href="/user/register">Kayıt Ol</a></p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
