@@ -1,5 +1,4 @@
 ﻿document.addEventListener("DOMContentLoaded", function() {
-    // Aktif sayfa için navbar linklerini vurgula
     const currentPath = window.location.pathname.toLowerCase();
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
     
@@ -8,18 +7,15 @@
         const linkController = link.getAttribute('asp-controller')?.toLowerCase();
         const linkAction = link.getAttribute('asp-action')?.toLowerCase();
         
-        // URL kontrolü
         if (currentPath === linkPath) {
             link.classList.add('active');
         }
-        // Controller ve Action kontrolü
         else if (linkController && linkAction) {
             const currentUrl = currentPath.split('/');
             if (currentUrl[1] === linkController && currentUrl[2] === linkAction) {
                 link.classList.add('active');
             }
         }
-        // Sadece Controller kontrolü
         else if (linkController) {
             const currentUrl = currentPath.split('/');
             if (currentUrl[1] === linkController) {
@@ -28,7 +24,6 @@
         }
     });
 
-    // Pagination için JavaScript
     document.querySelectorAll('.pagination .page-link').forEach(link => {
         link.addEventListener('click', function (e) {
             e.preventDefault();
@@ -37,7 +32,6 @@
         });
     });
 
-    // Açıklama alanı karakter sınırı kontrolü
     const descriptionTextareas = document.querySelectorAll('textarea[data-maxlength="150"]');
     descriptionTextareas.forEach(textarea => {
         textarea.addEventListener('input', function() {
@@ -52,7 +46,7 @@
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    //  etiketleri göster/gizle düğmesi 
+
     var toggleButton = document.getElementById("toggleTagsBtn");
     var tagsSection = document.getElementById("allTagsSection");
 
@@ -68,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // pagination için 
     document.querySelectorAll('.pagination .page-link').forEach(link => {
         link.addEventListener('click', function (e) {
             e.preventDefault();
@@ -78,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// CKEditor entegrasyonu
 ClassicEditor
     .create(document.querySelector('#editor'), {
         toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo'],
@@ -91,7 +83,6 @@ ClassicEditor
         }
     })
     .then(editor => {
-        // CKEditor'un dark temaya uygun stillerini eklemek için
         editor.editing.view.change(writer => {
             writer.setStyle('background-color', 'var(--dark-tertiary)', editor.editing.view.document.getRoot());
             writer.setStyle('color', 'var(--text-primary)', editor.editing.view.document.getRoot());
@@ -101,7 +92,6 @@ ClassicEditor
         console.error(error);
     });
 
-// Etiket giriş sistemi
 document.querySelector('#tagsInput').addEventListener('input', function () {
     let tags = this.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
     let tagsListHtml = '';
@@ -113,7 +103,6 @@ document.querySelector('#tagsInput').addEventListener('input', function () {
     document.querySelector('#tagsList').innerHTML = tagsListHtml;
 });
 
-// Sayfa yüklendiğinde mevcut etiketleri göster
 document.addEventListener('DOMContentLoaded', function () {
     const tagsInput = document.querySelector('#tagsInput');
     if (tagsInput && tagsInput.value) {
@@ -182,34 +171,30 @@ $(document).ready(function () {
     
 
 $(document).ready(function () {
-    // Başlık değiştirildiğinde URL'nin de güncellenmesini sağlayan fonksiyon
     $('#Title').on('input', function () {
         let titleValue = $(this).val().trim();
         let urlField = $('#Url');
 
-        // Başlığı URL'ye dönüştür
         let url = titleValue
             .toLowerCase()
-            // Türkçe karakterleri değiştir
+            
             .replace(/ı/g, 'i')
             .replace(/ğ/g, 'g')
             .replace(/ü/g, 'u')
             .replace(/ş/g, 's')
             .replace(/ç/g, 'c')
             .replace(/ö/g, 'o')
-            // Birden fazla boşluk ve özel karakterleri tek tire ile değiştir
+          
             .replace(/\s+/g, '-')
             .replace(/[^a-z0-9\-]/g, '')
-            // Birden fazla tireyi tek tireye düşür
+           
             .replace(/-+/g, '-')
-            // Başta ve sonda tire varsa kaldır
+          
             .replace(/^-+|-+$/g, '');
 
-        // URL alanını güncelle
         urlField.val(url);
     });
 });
-// Etiket giriş sistemi
 document.querySelector('#tagsInput').addEventListener('input', function () {
     let tags = this.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
     let tagsListHtml = '';
@@ -222,7 +207,6 @@ document.querySelector('#tagsInput').addEventListener('input', function () {
 });
 
 $(document).ready(function () {
-    // Yorum silme işlemi
     $('.delete-comment').click(function () {
         var commentId = $(this).data('comment-id');
         var postId = $(this).data('post-id');

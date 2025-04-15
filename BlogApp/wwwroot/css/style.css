@@ -13,7 +13,6 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Navbar Styles */
 .navbar {
     background-color: var(--dark-secondary) !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -34,7 +33,6 @@ body {
     color: var(--text-primary) !important;
 }
 
-/* Card Styles */
 .card {
     background-color: var(--dark-secondary);
     border: none;
@@ -237,7 +235,6 @@ footer {
     background-color: var(--dark-tertiary);
 }
 
-/* Blog Detail Specific Styles */
 .post-header {
     margin-bottom: 30px;
 }
@@ -342,7 +339,6 @@ footer {
         color: var(--dark-bg);
     }
 
-/* Author Bio Styles */
 .author-bio {
     display: flex;
     align-items: center;
@@ -370,7 +366,6 @@ footer {
     margin-bottom: 10px;
 }
 
-/* Comments Section Styles */
 .comments-section {
     margin-top: 50px;
 }
@@ -457,7 +452,6 @@ footer {
         min-height: 150px;
     }
 
-/* Related Posts Styles */
 .related-posts {
     margin-top: 60px;
 }
@@ -503,7 +497,6 @@ footer {
     font-size: 0.85rem;
 }
 
-/* Share Post Styles */
 .share-post {
     margin-top: 40px;
     margin-bottom: 40px;
@@ -537,7 +530,6 @@ footer {
         transform: translateY(-3px);
     }
 
-/* Table of Contents Styles */
 .toc {
     background-color: var(--dark-secondary);
     border-radius: 8px;
@@ -574,7 +566,6 @@ footer {
         padding-left: 15px;
     }
 
-/* Login Styles */
 .login-container {
     max-width: 500px;
     margin: 80px auto;
@@ -638,7 +629,6 @@ h1 {
     color: var(--accent);
 }
 
-/* Profile Specific Styles */
 .profile-header {
     background-color: var(--dark-secondary);
     border-radius: 10px;
@@ -850,12 +840,10 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Fix for text-muted class */
 .text-muted {
     color: lightgray !important;
 }
 
-/* Media Queries */
 @media (max-width: 767px) {
     .card-img-top {
         height: 180px;
@@ -922,7 +910,6 @@ h1 {
 
 }
 
-/* Navigation and Tabs */
 .nav-tabs .nav-link {
     color: #fff;
     background-color: #212529;
@@ -935,7 +922,6 @@ h1 {
     border-color: #0d6efd;
 }
 
-/* Pagination */
 .page-link {
     background-color: #212529;
     border-color: #495057;
@@ -953,7 +939,6 @@ h1 {
     color: #6c757d;
 }
 
-/* Modal */
 .modal-content {
     background-color: #212529;
 }
@@ -966,7 +951,6 @@ h1 {
     filter: invert(1) grayscale(100%) brightness(200%);
 }
 
-/* Form Controls */
 .form-control:focus {
     background-color: #212529;
     color: #fff;
@@ -978,7 +962,6 @@ h1 {
     color: #6c757d;
 }
 
-/* Cards */
 .card {
     transition: transform 0.2s;
 }
@@ -995,7 +978,6 @@ h1 {
     transform: none;
 }
 
-/* Badges */
 .badge {
     margin-right: 5px;
 }
@@ -1004,7 +986,6 @@ h1 {
     opacity: 0.8;
 }
 
-/* Content */
 .content img {
     max-width: 100%;
     height: auto;
@@ -1014,14 +995,12 @@ h1 {
     margin-right: 5px;
 }
 
-/* Avatar */
 .avatar {
     width: 50px;
     height: 50px;
     object-fit: cover;
 }
 
-/* CKEditor */
 .ck.ck-editor__main > .ck-editor__editable {
     background-color: #212529 !important;
     color: #fff !important;
@@ -1031,7 +1010,6 @@ h1 {
     border-color: #495057 !important;
 }
 
-/* Text Colors */
 label, h2, button, a, small, span {
     color: #fff !important;
 }
